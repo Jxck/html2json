@@ -79,17 +79,4 @@ this.suite_json2html = {
     test.strictEqual(expected, actual);
     test.done();
   }
-
-  //   var div_json = {
-  //     tag: 'div',
-  //     attr: {
-  //       id: 'test',
-  //       class: ['testClass']
-  //     },
-  //     value: 'this is div'
-  //   };
-  //   var div_html = '<div id="test" class="testClass">this is div</div>';
-  //   test.strictEqual(json2html(div_json), div_html);
-  //   test.done();
-  // }
 };
