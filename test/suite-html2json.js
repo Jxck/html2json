@@ -30,6 +30,19 @@ this.suite_html2json = {
     var parsedHtml = parseHtml(div_html);
     test.strictEqual(parsedHtml, div_html);
     var actual = html2json(div_html);
+    test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
+    test.done();
+  },
+  'should parse div with id and class': function(test) {
+    var expected = {
+      tag: 'div',
+      attr: { id: 'foo', class: ['bar', 'goo'] },
+      text: 'this is div'
+    };
+    var div_html = '<div id="foo" class="bar goo">this is div</div>';
+    var parsedHtml = parseHtml(div_html);
+    test.strictEqual(parsedHtml, div_html);
+    var actual = html2json(div_html);
     log(JSON.stringify(expected));
     log(JSON.stringify(actual));
     test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
