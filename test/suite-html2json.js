@@ -1,38 +1,38 @@
 this.suite_html2json = {
-  // 'test of test': function(test) {
-  //   test.strictEqual(typeof html2json, 'function');
-  //   test.done();
-  // },
-  // 'should parse div': function(test) {
-  //   var div_html = '<div></div>';
-  //   var expected = { 'tag' : 'div' };
-  //   var parsedHtml = parseHtml(div_html);
-  //   test.strictEqual(parsedHtml, div_html);
-  //   var actual = html2json(div_html);
-  //   test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
-  //   test.done();
-  // },
-  // 'should parse div with text': function(test) {
-  //   var expected = {
-  //     tag: 'div',
-  //     text: 'this is div'
-  //   };
-  //   var div_html = '<div>this is div</div>';
-  //   var parsedHtml = parseHtml(div_html);
-  //   test.strictEqual(parsedHtml, div_html);
-  //   var actual = html2json(div_html);
-  //   test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
-  //   test.done();
-  // },
-  // 'should parse div with id': function(test) {
-  //   var expected = { tag: 'div', attr: {id: 'foo'} };
-  //   var div_html = '<div id="foo"></div>';
-  //   var parsedHtml = parseHtml(div_html);
-  //   test.strictEqual(parsedHtml, div_html);
-  //   var actual = html2json(div_html);
-  //   test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
-  //   test.done();
-  // },
+  'test of test': function(test) {
+    test.strictEqual(typeof html2json, 'function');
+    test.done();
+  },
+  'should parse div': function(test) {
+    var div_html = '<div></div>';
+    var expected = { 'tag' : 'div' };
+    var parsedHtml = parseHtml(div_html);
+    test.strictEqual(parsedHtml, div_html);
+    var actual = html2json(div_html);
+    test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
+    test.done();
+  },
+//   'should parse div with text': function(test) {
+//     var expected = {
+//       tag: 'div',
+//       text: 'this is div'
+//     };
+//     var div_html = '<div>this is div</div>';
+//     var parsedHtml = parseHtml(div_html);
+//     test.strictEqual(parsedHtml, div_html);
+//     var actual = html2json(div_html);
+//     test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
+//     test.done();
+//   },
+//   'should parse div with id': function(test) {
+//     var expected = { tag: 'div', attr: {id: 'foo'} };
+//     var div_html = '<div id="foo"></div>';
+//     var parsedHtml = parseHtml(div_html);
+//     test.strictEqual(parsedHtml, div_html);
+//     var actual = html2json(div_html);
+//     test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
+//     test.done();
+//   },
   // 'should parse div with id and class': function(test) {
   //   var expected = {
   //     tag: 'div',
@@ -57,42 +57,63 @@ this.suite_html2json = {
     var parsedHtml = parseHtml(div_html);
     test.strictEqual(parsedHtml, div_html);
     var actual = html2json(div_html);
+    test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
+    test.done();
+  },
+  'should parse div with 2 child': function(test) {
+    var expected = {
+      tag: 'div',
+      child: [{
+        tag: 'p'
+      },{
+        tag: 'p'
+      }]
+    };
+    var div_html = '<div><p></p><p></p></div>';
+    var parsedHtml = parseHtml(div_html);
+    test.strictEqual(parsedHtml, div_html);
+    var actual = html2json(div_html);
+    test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
+    test.done();
+  },
+  'should parse div with nested child': function(test) {
+    var expected = {
+      tag: 'div',
+      child: [{
+        tag: 'p',
+        child: [{
+          tag: 'textarea',
+        }]
+      }]
+    };
+    var div_html = '<div><p><textarea></textarea></p></div>';
+    var parsedHtml = parseHtml(div_html);
+    test.strictEqual(parsedHtml, div_html);
+    var actual = html2json(div_html);
+    test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
+    test.done();
+  },
+  'should parse div with 2 nested child': function(test) {
+    var expected = {
+      tag: 'div',
+      child: [{
+        tag: 'p',
+        child: [{
+          tag: 'textarea',
+        }]
+      },{
+        tag: 'p'
+      }]
+    };
+    var div_html = '<div><p><textarea></textarea></p><p></p></div>';
+    var parsedHtml = parseHtml(div_html);
+    test.strictEqual(parsedHtml, div_html);
+    var actual = html2json(div_html);
     log(JSON.stringify(expected));
     log(JSON.stringify(actual));
     test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
     test.done();
   }
-
-//   'should parse div with child': function(test) {
-//     var expected = {
-//       tag: 'div',
-//       child: [{
-//         tag: 'p',
-//         attr:{
-//           id: '1'
-//         },
-//         child: [{
-//           tag: 'textarea',
-//           attr: {
-//             id: '3'
-//           }
-//         }]
-//       },{
-//         tag: 'p',
-//         attr: {
-//           id: '2'
-//         }
-//       }]
-//     };
-//     var div_html = '<div><p id="1"><textarea id="3"></textarea></p><p id="2"></p></div>';
-//     var parsedHtml = parseHtml(div_html);
-//     test.strictEqual(parsedHtml, div_html);
-//     var actual = html2json(div_html);
-//     log(JSON.stringify(expected));
-//     log(JSON.stringify(actual));
-// //    test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
-//     test.done();
-//   }
 // ,
 //   'should parse I want to :)': function(test) {
 //     var expected = {
