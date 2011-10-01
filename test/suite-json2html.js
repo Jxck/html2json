@@ -150,5 +150,76 @@ this.suite_json2html = {
     var expected = html;
     test.strictEqual(actual, expected);
     test.done();
+  },
+  'should parse div with inline tag': function(test) {
+    var json = {
+      tag: 'div',
+      attr: {
+        id: '1',
+        class: ['foo', 'bar']
+      },
+      child: [{
+        tag: 'p',
+        text: 'sample text with tag <strong>like</strong> this'
+      },{
+        tag: 'p',
+        text: '<strong>start</strong> with inline tag'
+      }]
+    };
+
+    var html = ''
+      + '<div id="1" class="foo bar">'
+      + '<p>sample text with tag <strong>like</strong> this</p>'
+      + '<p><strong>start</strong> with inline tag</p>'
+      + '</div>';
+
+    var actual = json2html(json);
+    var expected = html;
+    test.strictEqual(actual, expected);
+    test.done();
+  },
+  'should parse I want to :)': function(test) {
+    var json = {
+      tag: 'div',
+      attr: {
+        id: '#2',
+        class: ['slide']
+      },
+      child: [{
+        tag: 'h2',
+        text: 'just HTML elements with <code>slide</code>'
+      },{
+        tag: 'pre',
+        attr: {
+          id: 'demo',
+          class: ['sh_javascript']
+        }
+      },{
+        tag: 'pre',
+        attr: {
+          id: 'output',
+          class: ['sh_javascript']
+        }
+      },{
+        tag: 'input',
+        attr: {
+          id: 'execute',
+          type: 'button',
+          value: 'execute'
+        }
+      }]
+    };
+    var html = ''
+      + '<div id="#2" class="slide">'
+      + '<h2>just HTML elements with <code>slide</code></h2>'
+      + '<pre id="demo" class="sh_javascript"></pre>'
+      + '<pre id="output" class="sh_javascript"></pre>'
+      + '<input id="execute" type="button" value="execute"/>'
+      + '</div>';
+
+    var actual = json2html(json);
+    var expected = html;
+    test.strictEqual(actual, expected);
+    test.done();
   }
 };
