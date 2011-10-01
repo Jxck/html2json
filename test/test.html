@@ -2,6 +2,12 @@
   <head>
     <title>html2json Test Suite</title>
     <link rel="stylesheet" href="nodeunit.css" type="text/css" />
+    <script>
+      function log() {
+        console.log.apply(console, arguments);
+      }
+    </script>
+    <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
     <script src="../lib/html2json.js"></script>
     <script src="nodeunit.js"></script>
     <script src="suite-json2html.js"></script>

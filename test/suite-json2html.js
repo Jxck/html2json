@@ -1,7 +1,3 @@
-function log() {
-  console.log.apply(console, arguments);
-}
-
 var fixture = {
   tag: 'div',
   attr: {
@@ -42,16 +38,37 @@ this.suite_json2html = {
     test.done();
   },
   'should parse div': function(test) {
-    var div_json = {
-      tag: 'div',
-      attr: {
-        id: 'test',
-        class: ['testClass']
-      },
-      value: 'this is div'
-    };
-    var div_html = '<div id="test" class="testClass">this is div</div>';
-    test.strictEqual(json2html(div_json), div_html);
+    var div_json = { tag: 'div' };
+    var expected = '<div></div>';
+    var actual = json2html(div_json);
+    test.strictEqual(expected, actual);
+    test.done();
+  },
+  'should parse div with id': function(test) {
+    var div_json = { tag: 'div', id: 'foo' };
+    var expected = '<div id="foo"></div>';
+    var actual = json2html(div_json);
+    test.strictEqual(expected, actual);
+    test.done();
+  },
+  'should parse div with class': function(test) {
+    var div_json = { tag: 'div', id: 'foo', class: ['bar', 'goo'] };
+    var expected = '<div id="foo" class="bar goo"></div>';
+    var actual = json2html(div_json);
+    test.strictEqual(expected, actual);
     test.done();
   }
+
+  //   var div_json = {
+  //     tag: 'div',
+  //     attr: {
+  //       id: 'test',
+  //       class: ['testClass']
+  //     },
+  //     value: 'this is div'
+  //   };
+  //   var div_html = '<div id="test" class="testClass">this is div</div>';
+  //   test.strictEqual(json2html(div_json), div_html);
+  //   test.done();
+  // }
 };
