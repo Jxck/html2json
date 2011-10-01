@@ -111,7 +111,6 @@ this.suite_json2html = {
       + '<input id="execute"></input>'
       + '</div>';
     var actual = json2html(div_json);
-    log(actual);
     test.strictEqual(expected, actual);
     test.done();
   }

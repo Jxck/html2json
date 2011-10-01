@@ -11,11 +11,13 @@
     <script src="../lib/html2json.js"></script>
     <script src="nodeunit.js"></script>
     <script src="suite-json2html.js"></script>
+    <script src="suite-html2json.js"></script>
   </head>
   <body>
     <h1 id="nodeunit-header">html2json Test Suite</h1>
     <script>
       nodeunit.run({
+        'HTML to JSON': suite_html2json,
         'JSON to HTML': suite_json2html
       });
     </script>
