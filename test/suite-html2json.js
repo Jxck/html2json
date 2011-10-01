@@ -143,7 +143,32 @@ this.suite_html2json = {
     var actual = html2json(div_html);
     test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
     test.done();
+  },
+  'should parse div with inline tag': function(test) {
+    var expected = {
+      tag: 'div',
+      attr: {
+        id: '1',
+        class: ['foo', 'bar']
+      },
+      child: [{
+        tag: 'p',
+        text: 'sample text with tag <strong>like</strong> this'
+      }]
+    };
+
+    var div_html = ''
+      + '<div id="1" class="foo bar">'
+      + '<p>sample text with tag <strong>like</strong> this</p>'
+      + '</div>';
+
+    var parsedHtml = parseHtml(div_html);
+    test.strictEqual(parsedHtml, div_html);
+    var actual = html2json(div_html);
+    test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
+    test.done();
   }
+
   // 'should parse I want to :)': function(test) {
   //   var expected = {
   //     tag: 'div',
