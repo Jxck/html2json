@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>html2json Test Suite</title>
+    <link rel="stylesheet" href="nodeunit.css" type="text/css" />
+    <script src="../lib/html2json.js"></script>
+    <script src="nodeunit.js"></script>
+    <script src="suite-json2html.js"></script>
+  </head>
+  <body>
+    <h1 id="nodeunit-header">html2json Test Suite</h1>
+    <script>
+      nodeunit.run({
+        'JSON to HTML': suite_json2html
+      });
+    </script>
+  </body>
+</html>
