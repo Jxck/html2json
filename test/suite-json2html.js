@@ -57,7 +57,7 @@ this.suite_json2html = {
     test.strictEqual(expected, actual);
     test.done();
   },
-  'should parse div with child': function(test) {
+  'should parse div with multi child': function(test) {
     var div_json = {
       tag: 'div',
       child: [{
