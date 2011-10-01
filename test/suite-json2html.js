@@ -72,7 +72,7 @@ this.suite_json2html = {
     test.strictEqual(expected, actual);
     test.done();
   },
-  'should parse I want :)' : function(test) {
+  'should parse I want to :)' : function(test) {
     var div_json = {
       tag: 'div',
       attr: {
@@ -103,14 +103,15 @@ this.suite_json2html = {
         value: 'execute'
       }]
     };
-    var expected = ''
+    var div_html = ''
       + '<div id="#2" class="slide">'
       + '<h2>just HTML elements with <code>slide</code></h2>'
       + '<pre id="demo" class="sh_javascript"></pre>'
       + '<pre id="output" class="sh_javascript"></pre>'
-      + '<input id="execute"></input>'
+      + '<input id="execute"/>'
       + '</div>';
     var actual = json2html(div_json);
+    // TODO: support inline tag
     test.strictEqual(expected, actual);
     test.done();
   }
