@@ -78,5 +78,32 @@ this.suite_json2html = {
     var actual = json2html(div_json);
     test.strictEqual(expected, actual);
     test.done();
+  },
+  'should parse div with child': function(test) {
+    var div_json = {
+      tag: 'div',
+      child: [{
+        tag: 'p'
+      }]
+    };
+    var expected = '<div><p></p></div>';
+    var actual = json2html(div_json);
+    test.strictEqual(expected, actual);
+    test.done();
+  },
+  'should parse div with child': function(test) {
+    var div_json = {
+      tag: 'div',
+      child: [{
+        tag: 'p'
+      },
+      {
+        tag: 'textarea'
+      }]
+    };
+    var expected = '<div><p></p><textarea></textarea></div>';
+    var actual = json2html(div_json);
+    test.strictEqual(expected, actual);
+    test.done();
   }
 };
