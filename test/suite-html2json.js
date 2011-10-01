@@ -112,7 +112,7 @@ this.suite_html2json = {
     test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
     test.done();
   },
-  'should parse div with unary': function(test) {
+  'should parse div with unary & ingored inline tag': function(test) {
     var expected = {
       tag: 'div',
       attr: {
@@ -129,6 +129,12 @@ this.suite_html2json = {
           type: 'button',
           value: 'execute'
         }
+      },{
+        tag: 'img',
+        attr: {
+          src: 'photo.jpg',
+          alt: 'photo'
+        }
       }]
     };
 
@@ -136,6 +142,7 @@ this.suite_html2json = {
       + '<div id="1" class="foo bar">'
       + '<h2>sample text</h2>'
       + '<input id="execute" type="button" value="execute"/>'
+      + '<img src="photo.jpg" alt="photo"/>'
       + '</div>';
 
     var parsedHtml = parseHtml(div_html);
