@@ -111,6 +111,38 @@ this.suite_html2json = {
     var actual = html2json(div_html);
     test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
     test.done();
+  },
+  'should parse div with unary': function(test) {
+    var expected = {
+      tag: 'div',
+      attr: {
+        id: '1',
+        class: ['foo', 'bar']
+      },
+      child: [{
+        tag: 'h2',
+        text: 'sample text'
+      },{
+        tag: 'input',
+        attr: {
+          id: 'execute',
+          type: 'button',
+          value: 'execute'
+        }
+      }]
+    };
+
+    var div_html = ''
+      + '<div id="1" class="foo bar">'
+      + '<h2>sample text</h2>'
+      + '<input id="execute" type="button" value="execute"/>'
+      + '</div>';
+
+    var parsedHtml = parseHtml(div_html);
+    test.strictEqual(parsedHtml, div_html);
+    var actual = html2json(div_html);
+    test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
+    test.done();
   }
   // 'should parse I want to :)': function(test) {
   //   var expected = {
