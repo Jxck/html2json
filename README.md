@@ -14,6 +14,7 @@ include htmlparser.js & html2json.js scripts:
 
 json:
 
+```javascript
     var json = {
       tag: 'div',
       attr: {
@@ -44,21 +45,25 @@ json:
         }
       }]
     };
+```
 
 html:
 
+```html
   <div id="1" class="foo">
     <h2>sample text with <code>inline tag</code></h2>
     <pre id="demo" class="foo bar"></pre>
     <pre id="output" class="goo"></pre>
     <input id="execute" type="button" value="execute"/>
   </div>
+```
 
 result:
 
+```javascript
    json === html2json(html);
    html === json2html(json);
-
+```
 
 ## Documentation
 
