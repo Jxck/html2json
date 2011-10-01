@@ -5,7 +5,7 @@ this.suite_html2json = {
   },
   'should parse div': function(test) {
     var div_html = '<div></div>';
-    var expected = { "tag" : 'div' };
+    var expected = { 'tag' : 'div' };
     var parsedHtml = parseHtml(div_html);
     test.strictEqual(parsedHtml, div_html);
     var actual = html2json(div_html);
@@ -18,6 +18,15 @@ this.suite_html2json = {
       text: 'this is div'
     };
     var div_html = '<div>this is div</div>';
+    var parsedHtml = parseHtml(div_html);
+    test.strictEqual(parsedHtml, div_html);
+    var actual = html2json(div_html);
+    test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
+    test.done();
+  },
+  'should parse div with id': function(test) {
+    var expected = { tag: 'div', attr: {id: 'foo'} };
+    var div_html = '<div id="foo"></div>';
     var parsedHtml = parseHtml(div_html);
     test.strictEqual(parsedHtml, div_html);
     var actual = html2json(div_html);
@@ -75,4 +84,4 @@ this.suite_html2json = {
     test.done();
   }
 
-}
+};
