@@ -44,6 +44,16 @@ this.suite_json2html = {
     test.strictEqual(expected, actual);
     test.done();
   },
+  'should parse div with text': function(test) {
+    var div_json = {
+      tag: 'div',
+      text: 'this is div'
+    };
+    var expected = '<div>this is div</div>';
+    var actual = json2html(div_json);
+    test.strictEqual(expected, actual);
+    test.done();
+  },
   'should parse div with id': function(test) {
     var div_json = { tag: 'div', attr: {id: 'foo'} };
     var expected = '<div id="foo"></div>';
@@ -59,13 +69,16 @@ this.suite_json2html = {
     test.done();
   },
   'should parse div with id and class': function(test) {
-    var div_json = { tag: 'div', attr: {id: 'foo', class: ['bar', 'goo'] }};
-    var expected = '<div id="foo" class="bar goo"></div>';
+    var div_json = {
+      tag: 'div',
+      attr: { id: 'foo', class: ['bar', 'goo'] },
+      text: 'this is div'
+    };
+    var expected = '<div id="foo" class="bar goo">this is div</div>';
     var actual = json2html(div_json);
     test.strictEqual(expected, actual);
     test.done();
   }
-
 
   //   var div_json = {
   //     tag: 'div',
