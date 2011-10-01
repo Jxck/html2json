@@ -161,17 +161,23 @@ this.suite_html2json = {
       child: [{
         tag: 'p',
         text: 'sample text with tag <strong>like</strong> this'
+      },{
+        tag: 'p',
+        text: '<strong>start</strong> with inline tag'
       }]
     };
 
     var div_html = ''
       + '<div id="1" class="foo bar">'
       + '<p>sample text with tag <strong>like</strong> this</p>'
+      + '<p><strong>start</strong> with inline tag</p>'
       + '</div>';
 
     var parsedHtml = parseHtml(div_html);
     test.strictEqual(parsedHtml, div_html);
     var actual = html2json(div_html);
+    log('actual  ', JSON.stringify(actual));
+    log('expected', JSON.stringify(expected));
     test.strictEqual(JSON.stringify(expected), JSON.stringify(actual));
     test.done();
   }
