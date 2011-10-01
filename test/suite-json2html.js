@@ -182,23 +182,23 @@ this.suite_json2html = {
     var json = {
       tag: 'div',
       attr: {
-        id: '#2',
-        class: ['slide']
+        id: '1',
+        class: ['foo']
       },
       child: [{
         tag: 'h2',
-        text: 'just HTML elements with <code>slide</code>'
+        text: 'sample text with <code>inline tag</code>'
       },{
         tag: 'pre',
         attr: {
           id: 'demo',
-          class: ['sh_javascript']
+          class: ['foo', 'bar']
         }
       },{
         tag: 'pre',
         attr: {
           id: 'output',
-          class: ['sh_javascript']
+          class: ['goo']
         }
       },{
         tag: 'input',
@@ -210,10 +210,10 @@ this.suite_json2html = {
       }]
     };
     var html = ''
-      + '<div id="#2" class="slide">'
-      + '<h2>just HTML elements with <code>slide</code></h2>'
-      + '<pre id="demo" class="sh_javascript"></pre>'
-      + '<pre id="output" class="sh_javascript"></pre>'
+      + '<div id="1" class="foo">'
+      + '<h2>sample text with <code>inline tag</code></h2>'
+      + '<pre id="demo" class="foo bar"></pre>'
+      + '<pre id="output" class="goo"></pre>'
       + '<input id="execute" type="button" value="execute"/>'
       + '</div>';
 
