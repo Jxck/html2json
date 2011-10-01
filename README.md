@@ -7,12 +7,13 @@ html2json & json2html
 
 ## How to use
 
-include htmlparser.js & html2json.js scripts
+include htmlparser.js & html2json.js scripts:
 
   <script src="http://ejohn.org/files/htmlparser.js"></script>
   <script src="lib/html2json.js"></script>
 
 json:
+
     var json = {
       tag: 'div',
       attr: {
@@ -45,6 +46,7 @@ json:
     };
 
 html:
+
   <div id="1" class="foo">
     <h2>sample text with <code>inline tag</code></h2>
     <pre id="demo" class="foo bar"></pre>
@@ -53,6 +55,7 @@ html:
   </div>
 
 result:
+
    json === html2json(html);
    html === json2html(json);
 
