@@ -1097,14 +1097,14 @@ function _deepEqual(actual, expected) {
   if (actual === expected) {
     return true;
 
-  } else if (Buffer.isBuffer(actual) && Buffer.isBuffer(expected)) {
-    if (actual.length != expected.length) return false;
+  // } else if (Buffer.isBuffer(actual) && Buffer.isBuffer(expected)) {
+  //   if (actual.length != expected.length) return false;
 
-    for (var i = 0; i < actual.length; i++) {
-      if (actual[i] !== expected[i]) return false;
-    }
+  //   for (var i = 0; i < actual.length; i++) {
+  //     if (actual[i] !== expected[i]) return false;
+  //   }
 
-    return true;
+  //   return true;
 
   // 7.2. If the expected value is a Date object, the actual value is
   // equivalent if it is also a Date object that refers to the same time.

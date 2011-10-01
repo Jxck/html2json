@@ -4,115 +4,77 @@ this.suite_json2html = {
     test.done();
   },
   'should parse div': function(test) {
-    var div_json = { tag: 'div' };
-    var expected = '<div></div>';
-    var actual = json2html(div_json);
-    test.strictEqual(expected, actual);
+    var json = { tag: 'div' };
+    var html = '<div></div>';
+
+    var actual = json2html(json);
+    var expected = html;
+    test.strictEqual(actual, expected);
     test.done();
   },
   'should parse div with text': function(test) {
-    var div_json = {
+    var json = {
       tag: 'div',
       text: 'this is div'
     };
-    var expected = '<div>this is div</div>';
-    var actual = json2html(div_json);
-    test.strictEqual(expected, actual);
+    var html = '<div>this is div</div>';
+
+    var actual = json2html(json);
+    var expected = html;
+    test.strictEqual(actual, expected);
     test.done();
   },
   'should parse div with id': function(test) {
-    var div_json = { tag: 'div', attr: {id: 'foo'} };
-    var expected = '<div id="foo"></div>';
-    var actual = json2html(div_json);
-    test.strictEqual(expected, actual);
-    test.done();
-  },
-  'should parse div with class': function(test) {
-    var div_json = { tag: 'div', attr: {class: ['bar', 'goo'] }};
-    var expected = '<div class="bar goo"></div>';
-    var actual = json2html(div_json);
-    test.strictEqual(expected, actual);
+    var json = { tag: 'div', attr: { id: 'foo'} };
+    var html = '<div id="foo"></div>';
+
+    var actual = json2html(json);
+    var expected = html;
+    test.strictEqual(actual, expected);
     test.done();
   },
   'should parse div with id and class': function(test) {
-    var div_json = {
+    var json = {
       tag: 'div',
       attr: { id: 'foo', class: ['bar', 'goo'] },
       text: 'this is div'
     };
-    var expected = '<div id="foo" class="bar goo">this is div</div>';
-    var actual = json2html(div_json);
-    test.strictEqual(expected, actual);
+    var html = '<div id="foo" class="bar goo">this is div</div>';
+
+    var actual = json2html(json);
+    var expected = html;
+    test.strictEqual(actual, expected);
     test.done();
   },
   'should parse div with child': function(test) {
-    var div_json = {
+    var json = {
       tag: 'div',
       child: [{
         tag: 'p'
       }]
     };
-    var expected = '<div><p></p></div>';
-    var actual = json2html(div_json);
-    test.strictEqual(expected, actual);
+    var html = '<div><p></p></div>';
+
+    var actual = json2html(json);
+    var expected = html;
+    test.strictEqual(actual, expected);
     test.done();
   },
-  'should parse div with multi child': function(test) {
-    var div_json = {
+  'should parse div with 2 child': function(test) {
+    var json = {
       tag: 'div',
       child: [{
         tag: 'p'
       },
       {
-        tag: 'textarea'
+        tag: 'p'
       }]
     };
-    var expected = '<div><p></p><textarea></textarea></div>';
-    var actual = json2html(div_json);
-    test.strictEqual(expected, actual);
-    test.done();
-  },
-  'should parse I want to :)' : function(test) {
-    var div_json = {
-      tag: 'div',
-      attr: {
-        id: '#2',
-        class: ['slide']
-      },
-      child: [{
-        tag: 'h2',
-        text: 'just HTML elements with <code>slide</code>'
-      },{
-        tag: 'pre',
-        attr: {
-          id: 'demo',
-          class: ['sh_javascript']
-        }
-      },{
-        tag: 'pre',
-        attr: {
-          id: 'output',
-          class: ['sh_javascript']
-        }
-      },{
-        tag: 'input',
-        attr: {
-          id: 'execute',
-          type: 'button'
-        },
-        value: 'execute'
-      }]
-    };
-    var div_html = ''
-      + '<div id="#2" class="slide">'
-      + '<h2>just HTML elements with <code>slide</code></h2>'
-      + '<pre id="demo" class="sh_javascript"></pre>'
-      + '<pre id="output" class="sh_javascript"></pre>'
-      + '<input id="execute"/>'
-      + '</div>';
-    var actual = json2html(div_json);
-    // TODO: support inline tag
-    test.strictEqual(expected, actual);
+    var html = '<div><p></p><p></p></div>';
+
+    var actual = json2html(json);
+    var expected = html;
+    test.strictEqual(actual, expected);
     test.done();
   }
 };
