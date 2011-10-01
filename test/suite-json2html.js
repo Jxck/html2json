@@ -38,7 +38,20 @@ var fixture = {
 this.suite_json2html = {
   'test of test': function(test) {
     test.ok(fixture);
-    test.equal(typeof json2html, 'function');
+    test.strictEqual(typeof json2html, 'function');
+    test.done();
+  },
+  'should parse div': function(test) {
+    var div_json = {
+      tag: 'div',
+      attr: {
+        id: 'test',
+        class: ['testClass']
+      },
+      value: 'this is div'
+    };
+    var div_html = '<div id="test" class="testClass">this is div</div>';
+    test.strictEqual(json2html(div_json), div_html);
     test.done();
   }
 };
