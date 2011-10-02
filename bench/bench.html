@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Bench</title>
+    <link rel="stylesheet" href="../test/nodeunit.css" type="text/css" />
+    <script>
+      function log() {
+        console.log.apply(console, arguments);
+      }
+    </script>
+    <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+    <script src="http://ejohn.org/files/htmlparser.js"></script>
+    <script src="../lib/html2json.js"></script>
+    <script src="bench.js"></script>
+  </head>
+  <body>
+    <h1 id="nodeunit-header">html2json Test Suite</h1>
+    <h2>JSON 2 HTML</h2>
+    <p id="json2html"></p>
+    <h2>HTML 2 JSON</h2>
+    <p id="html2json"></p>
+  </body>
+</html>
