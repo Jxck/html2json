@@ -3,7 +3,7 @@ html2json & json2html
 
 ## Requirements
 
-[htmlparser.js](http://ejohn.org/files/htmlparser.js)
+[htmlparser.js](https://github.com/blowsie/Pure-JavaScript-HTML5-Parser)
 
 ## How to use
 
