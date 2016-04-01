@@ -1,0 +1,26 @@
+{
+  "name": "html2json",
+  "version": "0.0.0",
+  "description": "html to json & json to html",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jxck/html2json.git"
+  },
+  "keywords": [
+    "html",
+    "json"
+  ],
+  "author": "Jxck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jxck/html2json/issues"
+  },
+  "homepage": "https://github.com/jxck/html2json#readme"
+}
