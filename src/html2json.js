@@ -1,3 +1,5 @@
+require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
+
 function parseHtml(html) {
   var results = '';
   HTMLParser(html, {
