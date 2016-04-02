@@ -1,0 +1,3 @@
+[submodule "lib/Pure-JavaScript-HTML5-Parser"]
+	path = lib/Pure-JavaScript-HTML5-Parser
+	url = https://github.com/blowsie/Pure-JavaScript-HTML5-Parser.git
