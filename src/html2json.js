@@ -1,6 +1,6 @@
 require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
 
-function parseHtml(html) {
+this.parserHtml = function parseHtml(html) {
   var results = '';
   HTMLParser(html, {
     start: function(tag, attrs, unary) {
@@ -31,7 +31,7 @@ function makeMap(str) {
   return obj;
 }
 
-function html2json(html) {
+this.html2json = function html2json(html) {
   // Inline Elements - HTML 4.01
   var inline = makeMap('a,abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,select,small,span,strike,strong,sub,sup,textarea,tt,u,var');
   // but I want to handle some tag like block tag
@@ -137,7 +137,7 @@ function html2json(html) {
   return results;
 }
 
-function json2html(json) {
+this.json2html = function json2html(json) {
   var html = '';
   var tag = json.tag;
   var text = json.text;
