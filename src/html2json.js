@@ -1,6 +1,8 @@
-require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
+if (typeof HTMLParser === 'undefined') {
+  require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
+}
 
-this.parserHtml = function parseHtml(html) {
+this.parseHtml = function parseHtml(html) {
   var results = '';
   HTMLParser(html, {
     start: function(tag, attrs, unary) {

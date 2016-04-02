@@ -1,18 +1,23 @@
-this.suite_json2html = {
-  'test of test': function(test) {
-    test.strictEqual(typeof json2html, 'function');
-    test.done();
-  },
-  'should parse div': function(test) {
+if (typeof window === 'undefined') {
+  var assert = require('assert');
+  var json2html = require('../src/html2json').json2html;
+}
+
+describe('json2html', () => {
+  it('test of test', () => {
+    assert.strictEqual(typeof json2html, 'function');
+  });
+
+  it('should parse div', () => {
     var json = { tag: 'div' };
     var html = '<div></div>';
 
     var actual = json2html(json);
     var expected = html;
-    test.strictEqual(actual, expected);
-    test.done();
-  },
-  'should parse div with text': function(test) {
+    assert.strictEqual(actual, expected);
+  });
+
+  it('should parse div with text', () => {
     var json = {
       tag: 'div',
       text: 'this is div'
@@ -21,19 +26,19 @@ this.suite_json2html = {
 
     var actual = json2html(json);
     var expected = html;
-    test.strictEqual(actual, expected);
-    test.done();
-  },
-  'should parse div with id': function(test) {
+    assert.strictEqual(actual, expected);
+  });
+
+  it('should parse div with id', () => {
     var json = { tag: 'div', attr: { id: 'foo'} };
     var html = '<div id="foo"></div>';
 
     var actual = json2html(json);
     var expected = html;
-    test.strictEqual(actual, expected);
-    test.done();
-  },
-  'should parse div with id and class': function(test) {
+    assert.strictEqual(actual, expected);
+  });
+
+  it('should parse div with id and class', () => {
     var json = {
       tag: 'div',
       attr: { id: 'foo', class: ['bar', 'goo'] },
@@ -43,10 +48,10 @@ this.suite_json2html = {
 
     var actual = json2html(json);
     var expected = html;
-    test.strictEqual(actual, expected);
-    test.done();
-  },
-  'should parse div with child': function(test) {
+    assert.strictEqual(actual, expected);
+  });
+
+  it('should parse div with child', () => {
     var json = {
       tag: 'div',
       child: [{
@@ -57,10 +62,10 @@ this.suite_json2html = {
 
     var actual = json2html(json);
     var expected = html;
-    test.strictEqual(actual, expected);
-    test.done();
-  },
-  'should parse div with 2 child': function(test) {
+    assert.strictEqual(actual, expected);
+  });
+
+  it('should parse div with 2 child', () => {
     var json = {
       tag: 'div',
       child: [{
@@ -74,10 +79,10 @@ this.suite_json2html = {
 
     var actual = json2html(json);
     var expected = html;
-    test.strictEqual(actual, expected);
-    test.done();
-  },
-  'should parse div with nested child': function(test) {
+    assert.strictEqual(actual, expected);
+  });
+
+  it('should parse div with nested child', () => {
     var json = {
       tag: 'div',
       child: [{
@@ -91,10 +96,10 @@ this.suite_json2html = {
 
     var actual = json2html(json);
     var expected = html;
-    test.strictEqual(actual, expected);
-    test.done();
-  },
-  'should parse div with 2 nested child': function(test) {
+    assert.strictEqual(actual, expected);
+  });
+
+  it('should parse div with 2 nested child', () => {
     var json = {
       tag: 'div',
       child: [{
@@ -110,10 +115,10 @@ this.suite_json2html = {
 
     var actual = json2html(json);
     var expected = html;
-    test.strictEqual(actual, expected);
-    test.done();
-  },
-  'should parse div with unary & ingored inline tag': function(test) {
+    assert.strictEqual(actual, expected);
+  });
+
+  it('should parse div with unary & ingored inline tag', () => {
     var json = {
       tag: 'div',
       attr: {
@@ -148,10 +153,10 @@ this.suite_json2html = {
 
     var actual = json2html(json);
     var expected = html;
-    test.strictEqual(actual, expected);
-    test.done();
-  },
-  'should parse div with inline tag': function(test) {
+    assert.strictEqual(actual, expected);
+  });
+
+  it('should parse div with inline tag', () => {
     var json = {
       tag: 'div',
       attr: {
@@ -175,10 +180,10 @@ this.suite_json2html = {
 
     var actual = json2html(json);
     var expected = html;
-    test.strictEqual(actual, expected);
-    test.done();
-  },
-  'should parse I want to :)': function(test) {
+    assert.strictEqual(actual, expected);
+  });
+
+  it('should parse I want to :)', () => {
     var json = {
       tag: 'div',
       attr: {
@@ -219,7 +224,6 @@ this.suite_json2html = {
 
     var actual = json2html(json);
     var expected = html;
-    test.strictEqual(actual, expected);
-    test.done();
-  }
-};
+    assert.strictEqual(actual, expected);
+  });
+});
