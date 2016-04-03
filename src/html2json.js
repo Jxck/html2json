@@ -115,10 +115,10 @@
               }
               attributes[attr_name] = attr_value;
             });
-            buf['attr'] = attributes;
+            buf.attr = attributes;
           }
           if (unary) {
-            // if this tag don't has end tag
+            // if this tag dosen't have end tag
             // like <img src="hoge.png"/>
             // add last parents
             var last = bufArray.last();
