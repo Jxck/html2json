@@ -3,12 +3,12 @@ if (typeof window === 'undefined') {
   var json2html = require('../src/html2json').json2html;
 }
 
-describe('json2html', () => {
-  it('test of test', () => {
+describe('json2html', function() {
+  it('test of test', function() {
     assert.strictEqual(typeof json2html, 'function');
   });
 
-  it('should parse div', () => {
+  it('should parse div', function() {
     var json = { tag: 'div' };
     var html = '<div></div>';
 
@@ -17,7 +17,7 @@ describe('json2html', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('should parse div with text', () => {
+  it('should parse div with text', function() {
     var json = {
       tag: 'div',
       text: 'this is div'
@@ -29,7 +29,7 @@ describe('json2html', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('should parse div with id', () => {
+  it('should parse div with id', function() {
     var json = { tag: 'div', attr: { id: 'foo'} };
     var html = '<div id="foo"></div>';
 
@@ -38,7 +38,7 @@ describe('json2html', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('should parse div with id and class', () => {
+  it('should parse div with id and class', function() {
     var json = {
       tag: 'div',
       attr: { id: 'foo', class: ['bar', 'goo'] },
@@ -51,7 +51,7 @@ describe('json2html', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('should parse div with child', () => {
+  it('should parse div with child', function() {
     var json = {
       tag: 'div',
       child: [{
@@ -65,7 +65,7 @@ describe('json2html', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('should parse div with 2 child', () => {
+  it('should parse div with 2 child', function() {
     var json = {
       tag: 'div',
       child: [{
@@ -82,7 +82,7 @@ describe('json2html', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('should parse div with nested child', () => {
+  it('should parse div with nested child', function() {
     var json = {
       tag: 'div',
       child: [{
@@ -99,7 +99,7 @@ describe('json2html', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('should parse div with 2 nested child', () => {
+  it('should parse div with 2 nested child', function() {
     var json = {
       tag: 'div',
       child: [{
@@ -118,7 +118,7 @@ describe('json2html', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('should parse div with unary & ingored inline tag', () => {
+  it('should parse div with unary & ingored inline tag', function() {
     var json = {
       tag: 'div',
       attr: {
@@ -156,7 +156,7 @@ describe('json2html', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('should parse div with inline tag', () => {
+  it('should parse div with inline tag', function() {
     var json = {
       tag: 'div',
       attr: {
@@ -183,7 +183,7 @@ describe('json2html', () => {
     assert.strictEqual(actual, expected);
   });
 
-  it('should parse I want to :)', () => {
+  it('should parse I want to :)', function() {
     var json = {
       tag: 'div',
       attr: {

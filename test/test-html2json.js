@@ -4,12 +4,12 @@ if (typeof window === 'undefined') {
   var html2json = require('../src/html2json').html2json;
 }
 
-describe('html2json', () => {
-  it('test of test', () => {
+describe('html2json', function() {
+  it('test of test', function() {
     assert.strictEqual(typeof html2json, 'function');
   });
 
-  it('should parse div', () => {
+  it('should parse div', function() {
     var json = { 'tag' : 'div' };
     var html = '<div></div>';
 
@@ -20,7 +20,7 @@ describe('html2json', () => {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse div with text', () => {
+  it('should parse div with text', function() {
     var json = {
       tag: 'div',
       text: 'this is div'
@@ -34,7 +34,7 @@ describe('html2json', () => {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse div with id', () => {
+  it('should parse div with id', function() {
     var json = { tag: 'div', attr: { id: 'foo'} };
     var html = '<div id="foo"></div>';
 
@@ -45,7 +45,7 @@ describe('html2json', () => {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse div with id and class', () => {
+  it('should parse div with id and class', function() {
     var json = {
       tag: 'div',
       attr: { id: 'foo', class: ['bar', 'goo'] },
@@ -60,7 +60,7 @@ describe('html2json', () => {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse div with child', () => {
+  it('should parse div with child', function() {
     var json = {
       tag: 'div',
       child: [{
@@ -76,7 +76,7 @@ describe('html2json', () => {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse div with 2 child', () => {
+  it('should parse div with 2 child', function() {
     var json = {
       tag: 'div',
       child: [{
@@ -94,7 +94,7 @@ describe('html2json', () => {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse div with nested child', () => {
+  it('should parse div with nested child', function() {
     var json = {
       tag: 'div',
       child: [{
@@ -113,7 +113,7 @@ describe('html2json', () => {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse div with 2 nested child', () => {
+  it('should parse div with 2 nested child', function() {
     var json = {
       tag: 'div',
       child: [{
@@ -134,7 +134,7 @@ describe('html2json', () => {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse div with unary & ingored inline tag', () => {
+  it('should parse div with unary & ingored inline tag', function() {
     var json = {
       tag: 'div',
       attr: {
@@ -174,7 +174,7 @@ describe('html2json', () => {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse div with inline tag', () => {
+  it('should parse div with inline tag', function() {
     var json = {
       tag: 'div',
       attr: {
@@ -203,7 +203,7 @@ describe('html2json', () => {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse I want to :)', () => {
+  it('should parse I want to :)', function() {
     var json = {
       tag: 'div',
       attr: {
