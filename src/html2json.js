@@ -51,13 +51,27 @@
             var name  = attr.name;
             var value = attr.value;
 
+            // has multi attibutes
+            // make it array of attribute
             if (value.match(/ /)) {
-              // has multi attibutes
-              // make it array of attribute
               value = value.split(' ');
             }
 
-            pre[name] = value;
+            // if attr already exists
+            // merge it
+            if (pre[name]) {
+              if (Array.isArray(pre[name])) {
+                // already array, push to last
+                pre[name].push(value);
+              } else {
+                // single value, make it array
+                pre[name] = [pre[name], value];
+              }
+            } else {
+              // not exist, put it
+              pre[name] = value;
+            }
+
             return pre;
           }, {});
         }
@@ -102,7 +116,7 @@
     return results;
   };
 
-  console.log(global.html2json('<div><p>bar</p></div>'));
+  console.log(global.html2json('<div id=a id=b></div>'));
 
 
   global.json2html = function json2html(json) {
