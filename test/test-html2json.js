@@ -1,6 +1,7 @@
 if (typeof window === 'undefined') {
   var assert = require('assert');
   var html2json = require('../src/html2json').html2json;
+  var json2html = require('../src/html2json').json2html;
 }
 
 describe('html2json', function() {
@@ -15,9 +16,8 @@ describe('html2json', function() {
     };
     var html = '<div></div>';
 
-    var actual = html2json(html);
-    var expected = json;
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
   });
 
   it('should parse div with text', function() {
@@ -33,9 +33,8 @@ describe('html2json', function() {
     };
     var html = '<div>this is div</div>';
 
-    var actual = html2json(html);
-    var expected = json;
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
   });
 
   it('should parse div with id', function() {
@@ -48,9 +47,8 @@ describe('html2json', function() {
     };
     var html = '<div id="foo"></div>';
 
-    var actual = html2json(html);
-    var expected = json;
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
   });
 
   it('should parse div with id and class', function() {
@@ -70,9 +68,8 @@ describe('html2json', function() {
     };
     var html = '<div id="foo" class="bar goo">this is div</div>';
 
-    var actual = html2json(html);
-    var expected = json;
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
   });
 
   it('should parse div with child', function() {
@@ -94,9 +91,8 @@ describe('html2json', function() {
     };
     var html = '<div><p>child</p></div>';
 
-    var actual = html2json(html);
-    var expected = json;
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
   });
 
   it('should parse div with 2 child', function() {
@@ -118,9 +114,8 @@ describe('html2json', function() {
     };
     var html = '<div><p>child1</p><p>child2</p></div>';
 
-    var actual = html2json(html);
-    var expected = json;
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
   });
 
   it('should parse div with nested child', function() {
@@ -145,9 +140,8 @@ describe('html2json', function() {
     };
     var html = '<div><p><textarea>alert(1);</textarea></p></div>';
 
-    var actual = html2json(html);
-    var expected = json;
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
   });
 
   it('should parse div with 2 nested child', function() {
@@ -179,9 +173,8 @@ describe('html2json', function() {
     };
     var html = '<div><p><textarea>alert(1);</textarea></p><p>child of div</p></div>';
 
-    var actual = html2json(html);
-    var expected = json;
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
   });
 
   it('should parse div with unary & ingored inline tag', function() {
@@ -215,9 +208,8 @@ describe('html2json', function() {
       + '<img src="photo.jpg" alt="photo"/>'
       + '</div>';
 
-    var actual = html2json(html);
-    var expected = json;
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
   });
 
   it('should parse div with inline tag', function() {
@@ -273,9 +265,8 @@ describe('html2json', function() {
       + '<p><strong>start</strong> with inline tag</p>'
       + '</div>';
 
-    var actual = html2json(html);
-    var expected = json;
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
   });
 
   it('should parse I want to :)', function() {
@@ -319,8 +310,7 @@ describe('html2json', function() {
       + '<input id="execute" type="button" value="execute"/>'
       + '</div>';
 
-    var actual = html2json(html);
-    var expected = json;
-    assert.deepEqual(actual, expected);
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
   });
 });
