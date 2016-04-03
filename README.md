@@ -4,6 +4,8 @@
 
 [htmlparser.js](https://github.com/blowsie/Pure-JavaScript-HTML5-Parser)
 
+repositry includes this at `lib/` as git subtree.
+
 
 ## How to use
 
