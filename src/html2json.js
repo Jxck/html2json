@@ -94,13 +94,13 @@
       start: function(tag, attrs, unary) {
         if (inline.indexOf(tag) > -1) {
           // inline tag is melted into text
-          // because syntacs higlight became dirty
-          // if support it.
-          // 'hoge <inline>tag</inline> fuga'
+          // 'foo <span>bar</span> buz'
           var attributes = '';
-          attrs.forEach(function (attr) {
-            attributes += ' ' + attr.name + '=' + q(attr.value);
-          });
+          if (attrs.length > 0) {
+            attributes = attrs.forEach(function (attr) {
+              return attr.name + '=' + q(attr.value);
+            });
+          }
           inlineBuf.push('<' + tag + attributes + '>');
         } else {
           var buf = {}; // buffer for single tag
