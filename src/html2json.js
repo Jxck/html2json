@@ -62,12 +62,12 @@
         if (unary) {
           // if this tag dosen't have end tag
           // like <img src="hoge.png"/>
-          // add last parents
-          var last = bufArray[0];
-          if (!(Array.isArray(last.child))) {
-            last.child = [];
+          // add to parents
+          var parent = bufArray[0];
+          if (!(Array.isArray(parent.child))) {
+            parent.child = [];
           }
-          last.child.push(buf);
+          parent.child.push(buf);
         } else {
           bufArray.unshift(buf);
         }
@@ -78,19 +78,19 @@
         if (bufArray.length === 0) {
           return results = buf;
         }
-        var last = bufArray[0];
-        if (!(Array.isArray(last.child))) {
-          last.child = [];
+        var parent = bufArray[0];
+        if (!(Array.isArray(parent.child))) {
+          parent.child = [];
         }
-        last.child.push(buf);
+        parent.child.push(buf);
       },
       chars: function(text) {
-        var last = bufArray[0];
-        if (last) {
-          if (!last.text) {
-            last.text = '';
+        var parent = bufArray[0];
+        if (parent) {
+          if (!parent.text) {
+            parent.text = '';
           }
-          last.text += text;
+          parent.text += text;
         }
       },
       comment: function(text) {
