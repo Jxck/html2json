@@ -186,7 +186,7 @@ describe('html2json', function() {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse div with inline tag', function() {
+  xit('should parse div with inline tag', function() {
     var json = {
       tag: 'div',
       attr: {
@@ -218,7 +218,7 @@ describe('html2json', function() {
     assert.deepEqual(actual, expected);
   });
 
-  it('should parse I want to :)', function() {
+  xit('should parse I want to :)', function() {
     var json = {
       tag: 'div',
       attr: {

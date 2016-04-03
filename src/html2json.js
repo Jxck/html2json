@@ -37,51 +37,6 @@
   };
 
   global.html2json = function html2json(html) {
-    // Inline Elements - HTML 4.01
-    var inline = [
-      'a',
-      'abbr',
-      'acronym',
-      'applet',
-      'b',
-      'basefont',
-      'bdo',
-      'big',
-      'br',
-      'button',
-      'cite',
-      'code',
-      'del',
-      'dfn',
-      'em',
-      'font',
-      'i',
-      'iframe',
-      'ins',
-      'kbd',
-      'label',
-      'map',
-      'object',
-      'q',
-      's',
-      'samp',
-      'script',
-      'select',
-      'small',
-      'span',
-      'strike',
-      'strong',
-      'sub',
-      'sup',
-      'tt',
-      'u',
-      'var'
-      // wanna handle tag below as block tag
-      // 'img',
-      // 'input',
-      // 'textarea',
-    ];
-
     html = html.replace(/<!DOCTYPE[\s\S]+?>/, '');
 
     var bufArray = [];
@@ -89,85 +44,53 @@
     var inlineBuf = [];
     HTMLParser(html, {
       start: function(tag, attrs, unary) {
-        if (inline.indexOf(tag) > -1) {
-          // inline tag is melted into text
-          // 'foo <span>bar</span> buz'
-          var attributes = '';
-          if (attrs.length > 0) {
-            attributes = attrs.forEach(function (attr) {
-              return attr.name + '=' + q(attr.value);
-            });
-          }
-          inlineBuf.push('<' + tag + attributes + '>');
-        } else {
-          var buf = {}; // buffer for single tag
-          buf.tag = tag;
-          if (attrs.length !== 0) {
-            var attributes = {};
-            attrs.forEach(function(attr) {
-              var attr_name = attr.name;
-              var attr_value = attr.value;
-              if (attr_name === 'class') {
-                attr_value = attr_value.split(' ');
-              }
-              attributes[attr_name] = attr_value;
-            });
-            buf.attr = attributes;
-          }
-          if (unary) {
-            // if this tag dosen't have end tag
-            // like <img src="hoge.png"/>
-            // add last parents
-            var last = bufArray[0];
-            if (!(Array.isArray(last.child))) {
-              last.child = [];
+        var buf = {}; // buffer for single tag
+        buf.tag = tag;
+        if (attrs.length !== 0) {
+          buf.attr = attrs.reduce(function(pre, attr) {
+            var name  = attr.name;
+            var value = attr.value;
+
+            if (name === 'class') {
+              value = value.split(' ');
             }
-            last.child.push(buf);
-          } else {
-            bufArray.unshift(buf);
-          }
+
+            pre[name] = value;
+            return pre;
+          }, {});
         }
-      },
-      end: function(tag) {
-        if (inline.indexOf(tag) > 0) {
-          // if end of inline tag
-          // inlineBuf is now '<inline>tag'
-          // melt into last node text
-          var last = bufArray[0];
-          inlineBuf.push('</' + tag + '>');
-          // inlineBuf became '<inline>tag</inline>'
-          if (!last.text) last.text = '';
-          last.text += inlineBuf.join('');
-          // clear inlineBuf
-          inlineBuf = [];
-        } else {
-          // if block tag
-          var buf = bufArray.shift();
-          if (bufArray.length === 0) {
-            return results = buf;
-          }
+        if (unary) {
+          // if this tag dosen't have end tag
+          // like <img src="hoge.png"/>
+          // add last parents
           var last = bufArray[0];
           if (!(Array.isArray(last.child))) {
             last.child = [];
           }
           last.child.push(buf);
+        } else {
+          bufArray.unshift(buf);
         }
       },
+      end: function(tag) {
+        // merge into parent tag
+        var buf = bufArray.shift();
+        if (bufArray.length === 0) {
+          return results = buf;
+        }
+        var last = bufArray[0];
+        if (!(Array.isArray(last.child))) {
+          last.child = [];
+        }
+        last.child.push(buf);
+      },
       chars: function(text) {
-        if (inlineBuf.length !== 0) {
-          // if inlineBuf exists
-          // this cace inlineBuf is maybe like this
-          // 'hoge <inline>tag</inline>'
-          // so append to last
-          inlineBuf.push(text);
-        } else {
-          var last = bufArray[0];
-          if (last) {
-            if (!last.text) {
-              last.text = '';
-            }
-            last.text += text;
+        var last = bufArray[0];
+        if (last) {
+          if (!last.text) {
+            last.text = '';
           }
+          last.text += text;
         }
       },
       comment: function(text) {
@@ -176,6 +99,9 @@
     });
     return results;
   };
+
+  console.log(global.html2json(`<div><p>bar</p></div>`));
+
 
   global.json2html = function json2html(json) {
     // Empty Elements - HTML 4.01
