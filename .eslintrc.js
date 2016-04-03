@@ -22,5 +22,9 @@ module.exports = {
         "no-undef": [
             "off"
         ],
+        "comma-dangle": [
+            "error",
+            "only-multiline"
+        ],
     }
 };
