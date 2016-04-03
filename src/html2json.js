@@ -66,7 +66,7 @@
           // like <img src="hoge.png"/>
           // add to parents
           var parent = bufArray[0];
-          if (!(Array.isArray(parent.child))) {
+          if (parent.child === undefined) {
             parent.child = [];
           }
           parent.child.push(buf);
@@ -81,7 +81,7 @@
           return results = buf;
         }
         var parent = bufArray[0];
-        if (!(Array.isArray(parent.child))) {
+        if (parent.child === undefined) {
           parent.child = [];
         }
         parent.child.push(buf);
