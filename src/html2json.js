@@ -4,13 +4,17 @@ if (typeof window === 'undefined') {
   require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
 }
 
+function q(v) {
+  return '"' + v + '"';
+}
+
 global.parseHtml = function parseHtml(html) {
   var results = '';
   HTMLParser(html, {
     start: function(tag, attrs, unary) {
       results += '<' + tag;
       attrs.forEach(function(attr) {
-        results += ' ' + attr.name + '="' + attr.escaped + '"';
+        results += ' ' + attr.name + '=' + q(attr.escaped);
       });
       results += (unary ? '/' : '') + '>';
     },
@@ -94,7 +98,7 @@ global.html2json = function html2json(html) {
         // 'hoge <inline>tag</inline> fuga'
         var attributes = '';
         attrs.forEach(function (attr) {
-          attributes += ' ' + attr.name + '="' + attr.value + '"';
+          attributes += ' ' + attr.name + '=' + q(attr.value);
         });
         inlineBuf.push('<' + tag + attributes + '>');
       } else {
@@ -176,8 +180,6 @@ global.html2json = function html2json(html) {
 };
 
 global.json2html = function json2html(json) {
-  function q(v) { return '"' + v + '"'; }
-
   // Empty Elements - HTML 4.01
   var empty = ['area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param', 'embed'];
 
