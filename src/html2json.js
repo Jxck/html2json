@@ -44,8 +44,11 @@
     var inlineBuf = [];
     HTMLParser(html, {
       start: function(tag, attrs, unary) {
-        var buf = {}; // buffer for single tag
-        buf.tag = tag;
+        // buffer for single tag
+        var buf = {
+          node: 'element',
+          tag: tag,
+        };
         if (attrs.length !== 0) {
           buf.attr = attrs.reduce(function(pre, attr) {
             var name  = attr.name;
@@ -101,8 +104,15 @@
         parent.child.push(buf);
       },
       chars: function(text) {
+        var node = {
+          node: 'text',
+          text: text,
+        }
         var parent = bufArray[0];
-        parent.text += text;
+        if (parent.child === undefined) {
+          parent.child = [];
+        }
+        parent.child.push(node);
       },
       comment: function(text) {
         // results += "<!--" + text + "-->";
@@ -110,9 +120,6 @@
     });
     return results;
   };
-
-  console.log(global.html2json('<div id=a id=b></div>'));
-
 
   global.json2html = function json2html(json) {
     // Empty Elements - HTML 4.01
