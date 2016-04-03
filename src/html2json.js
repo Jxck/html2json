@@ -57,8 +57,6 @@
       'font',
       'i',
       'iframe',
-      'img',
-      'input',
       'ins',
       'kbd',
       'label',
@@ -75,16 +73,14 @@
       'strong',
       'sub',
       'sup',
-      'textarea',
       'tt',
       'u',
       'var'
+      // wanna handle tag below as block tag
+      // 'img',
+      // 'input',
+      // 'textarea',
     ];
-
-    // but I want to handle some tag like block tag
-    inline.splice(inline.indexOf('textarea'), 1);
-    inline.splice(inline.indexOf('input'), 1);
-    inline.splice(inline.indexOf('img'), 1);
 
     html = html.replace(/<!DOCTYPE[\s\S]+?>/, '');
 
