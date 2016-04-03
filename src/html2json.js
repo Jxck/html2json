@@ -8,34 +8,6 @@
     return '"' + v + '"';
   }
 
-  global.parseHtml = function parseHtml(html) {
-    var results = '';
-    HTMLParser(html, {
-      start: function(tag, attrs, unary) {
-        results += '<' + tag;
-
-        var attributes = '';
-        if (attrs.length > 0) {
-          attributes = ' ' + attrs.map(function(attr) {
-            return attr.name + '=' + q(attr.escaped);
-          }).join(' ');
-        }
-        results += attributes;
-        results += (unary ? '/' : '') + '>';
-      },
-      end: function(tag) {
-        results += '</' + tag + '>';
-      },
-      chars: function(text) {
-        results += text;
-      },
-      comment: function(text) {
-        results += '<!--' + text + '-->';
-      }
-    });
-    return results;
-  };
-
   global.html2json = function html2json(html) {
     html = html.replace(/<!DOCTYPE[\s\S]+?>/, '');
 
