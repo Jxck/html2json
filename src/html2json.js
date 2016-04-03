@@ -11,8 +11,6 @@
   }
 
   global.html2json = function html2json(html) {
-    //html = html.replace(/<!DOCTYPE[\s\S]+?>/, '');
-
     var bufArray = [];
     var results = {};
     HTMLParser(html, {
