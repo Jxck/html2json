@@ -37,6 +37,20 @@ describe('html2json', function() {
     assert.deepEqual(html, json2html(json));
   });
 
+  it('should parse div with comment', function() {
+    var json = {
+      node: 'element',
+      tag : 'div',
+      child: [
+        { node: 'comment', text: ' foo ' }
+      ]
+    };
+    var html = '<div><!-- foo --></div>';
+
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
+  });
+
   it('should parse div with id', function() {
     var json = {
       node: 'element',

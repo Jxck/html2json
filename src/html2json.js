@@ -88,7 +88,15 @@
         parent.child.push(node);
       },
       comment: function(text) {
-        // results += "<!--" + text + "-->";
+        var node = {
+          node: 'comment',
+          text: text,
+        };
+        var parent = bufArray[0];
+        if (parent.child === undefined) {
+          parent.child = [];
+        }
+        parent.child.push(node);
       }
     });
     return results;
@@ -130,6 +138,10 @@
 
     if (json.node === 'text') {
       return json.text;
+    }
+
+    if (json.node === 'comment') {
+      return '<!--' + json.text + '-->';
     }
   };
 
