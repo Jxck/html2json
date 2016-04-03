@@ -1,8 +1,10 @@
+(function(global) {
+
 if (typeof window === 'undefined') {
   require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
 }
 
-this.parseHtml = function parseHtml(html) {
+global.parseHtml = function parseHtml(html) {
   var results = '';
   HTMLParser(html, {
     start: function(tag, attrs, unary) {
@@ -25,7 +27,7 @@ this.parseHtml = function parseHtml(html) {
   return results;
 };
 
-this.html2json = function html2json(html) {
+global.html2json = function html2json(html) {
   // Inline Elements - HTML 4.01
   var inline = [
     'a',
@@ -173,7 +175,7 @@ this.html2json = function html2json(html) {
   return results;
 };
 
-this.json2html = function json2html(json) {
+global.json2html = function json2html(json) {
   function q(v) { return '"' + v + '"'; }
 
   // Empty Elements - HTML 4.01
@@ -208,3 +210,5 @@ this.json2html = function json2html(json) {
     return [open, text, child, close].join('');
   }
 };
+
+})(this);
