@@ -87,9 +87,6 @@
     var bufArray = [];
     var results = {};
     var inlineBuf = [];
-    bufArray.last = function() {
-      return this[ this.length - 1];
-    };
     HTMLParser(html, {
       start: function(tag, attrs, unary) {
         if (inline.indexOf(tag) > -1) {
@@ -121,13 +118,13 @@
             // if this tag dosen't have end tag
             // like <img src="hoge.png"/>
             // add last parents
-            var last = bufArray.last();
+            var last = bufArray[0];
             if (!(Array.isArray(last.child))) {
               last.child = [];
             }
             last.child.push(buf);
           } else {
-            bufArray.push(buf);
+            bufArray.unshift(buf);
           }
         }
       },
@@ -136,7 +133,7 @@
           // if end of inline tag
           // inlineBuf is now '<inline>tag'
           // melt into last node text
-          var last = bufArray.last();
+          var last = bufArray[0];
           inlineBuf.push('</' + tag + '>');
           // inlineBuf became '<inline>tag</inline>'
           if (!last.text) last.text = '';
@@ -145,11 +142,11 @@
           inlineBuf = [];
         } else {
           // if block tag
-          var buf = bufArray.pop();
+          var buf = bufArray.shift();
           if (bufArray.length === 0) {
             return results = buf;
           }
-          var last = bufArray.last();
+          var last = bufArray[0];
           if (!(Array.isArray(last.child))) {
             last.child = [];
           }
@@ -164,7 +161,7 @@
           // so append to last
           inlineBuf.push(text);
         } else {
-          var last = bufArray.last();
+          var last = bufArray[0];
           if (last) {
             if (!last.text) {
               last.text = '';
