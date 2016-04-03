@@ -10,7 +10,10 @@ describe('html2json', function() {
   });
 
   it('should parse div', function() {
-    var json = { 'tag' : 'div' };
+    var json = {
+      node: 'element',
+      tag : 'div',
+    };
     var html = '<div></div>';
 
     var parsedHtml = parseHtml(html);
@@ -21,7 +24,16 @@ describe('html2json', function() {
   });
 
   it('should parse div with text', function() {
-    var json = { tag: 'div', text: 'this is div' };
+    var json = {
+      node: 'element',
+      tag: 'div',
+      child: [
+        {
+          node: 'text',
+          text: 'this is div'
+        }
+      ]
+    };
     var html = '<div>this is div</div>';
 
     var parsedHtml = parseHtml(html);
@@ -32,7 +44,13 @@ describe('html2json', function() {
   });
 
   it('should parse div with id', function() {
-    var json = { tag: 'div', attr: { id: 'foo'} };
+    var json = {
+      node: 'element',
+      tag: 'div',
+      attr: {
+        id: 'foo'
+      }
+    };
     var html = '<div id="foo"></div>';
 
     var parsedHtml = parseHtml(html);
@@ -44,9 +62,18 @@ describe('html2json', function() {
 
   it('should parse div with id and class', function() {
     var json = {
+      node: 'element',
       tag: 'div',
-      attr: { id: 'foo', class: ['bar', 'goo'] },
-      text: 'this is div'
+      attr: {
+        id: 'foo',
+        class: ['bar', 'goo']
+      },
+      child: [
+        {
+          node: 'text',
+          text: 'this is div',
+        }
+      ]
     };
     var html = '<div id="foo" class="bar goo">this is div</div>';
 
@@ -59,9 +86,19 @@ describe('html2json', function() {
 
   it('should parse div with child', function() {
     var json = {
+      node: 'element',
       tag: 'div',
       child: [
-        { tag: 'p', text: 'child' }
+        {
+          node: 'element',
+          tag: 'p',
+          child: [
+            {
+              node: 'text',
+              text: 'child'
+            }
+          ]
+        }
       ]
     };
     var html = '<div><p>child</p></div>';
@@ -75,10 +112,19 @@ describe('html2json', function() {
 
   it('should parse div with 2 child', function() {
     var json = {
+      node: 'element',
       tag: 'div',
       child: [
-        { tag: 'p', text: 'child1' },
-        { tag: 'p', text: 'child2' },
+        {
+          node: 'element',
+          tag: 'p',
+          child: [{ node: 'text', text: 'child1' }]
+        },
+        {
+          node: 'element',
+          tag: 'p',
+          child: [{ node: 'text', text: 'child2' }]
+        }
       ]
     };
     var html = '<div><p>child1</p><p>child2</p></div>';
@@ -92,14 +138,19 @@ describe('html2json', function() {
 
   it('should parse div with nested child', function() {
     var json = {
+      node: 'element',
       tag: 'div',
       child: [
         {
+          node: 'element',
           tag: 'p',
           child: [
             {
+              node: 'element',
               tag: 'textarea',
-              text: 'alert(1);',
+              child: [
+                { node: 'text', text: 'alert(1);' }
+              ]
             }
           ]
         }
@@ -116,20 +167,28 @@ describe('html2json', function() {
 
   it('should parse div with 2 nested child', function() {
     var json = {
+      node: 'element',
       tag: 'div',
       child: [
         {
+          node: 'element',
           tag: 'p',
           child: [
             {
+              node: 'element',
               tag: 'textarea',
-              text: 'alert(1);',
+              child: [
+                { node: 'text', text: 'alert(1);' }
+              ]
             }
           ]
         },
         {
+          node: 'element',
           tag: 'p',
-          text: 'child of div',
+          child: [
+            { node: 'text', text: 'child of div' }
+          ]
         }
       ]
     };
@@ -144,30 +203,24 @@ describe('html2json', function() {
 
   it('should parse div with unary & ingored inline tag', function() {
     var json = {
+      node: 'element',
       tag: 'div',
-      attr: {
-        id: '1',
-        class: ['foo', 'bar'],
-      },
+      attr: { id: '1', class: ['foo', 'bar'] },
       child: [
         {
+          node: 'element',
           tag: 'h2',
-          text: 'sample text',
+          child: [ { node: 'text', text: 'sample text' } ]
         },
         {
+          node: 'element',
           tag: 'input',
-          attr: {
-            id: 'execute',
-            type: 'button',
-            value: 'execute',
-          }
+          attr: { id: 'execute', type: 'button', value: 'execute' }
         },
         {
+          node: 'element',
           tag: 'img',
-          attr: {
-            src: 'photo.jpg',
-            alt: 'photo',
-          }
+          attr: { src: 'photo.jpg', alt: 'photo' }
         }
       ]
     };
@@ -186,28 +239,56 @@ describe('html2json', function() {
     assert.deepEqual(actual, expected);
   });
 
-  xit('should parse div with inline tag', function() {
+  it('should parse div with inline tag', function() {
     var json = {
+      node: 'element',
       tag: 'div',
-      attr: {
-        id: '1',
-        class: ['foo', 'bar'],
-      },
+      attr: { id: '1', class: ['foo', 'bar'] },
       child: [
         {
+          node: 'element',
           tag: 'p',
-          text: 'sample text with tag <strong>like</strong> this'
+          child: [
+            {
+              node: 'text',
+              text: 'text with ',
+            },
+            {
+              node: 'element',
+              tag: 'strong',
+              child: [
+                { node: 'text', text: 'strong' }
+              ]
+            },
+            {
+              node: 'text',
+              text: ' tag'
+            },
+          ]
         },
         {
+          node: 'element',
           tag: 'p',
-          text: '<strong>start</strong> with inline tag'
+          child: [
+            {
+              node: 'element',
+              tag: 'strong',
+              child: [
+                { node: 'text', text: 'start' }
+              ]
+            },
+            {
+              node: 'text',
+              text: ' with inline tag',
+            },
+          ]
         }
       ]
     };
 
     var html = ''
       + '<div id="1" class="foo bar">'
-      + '<p>sample text with tag <strong>like</strong> this</p>'
+      + '<p>text with <strong>strong</strong> tag</p>'
       + '<p><strong>start</strong> with inline tag</p>'
       + '</div>';
 
@@ -218,47 +299,44 @@ describe('html2json', function() {
     assert.deepEqual(actual, expected);
   });
 
-  xit('should parse I want to :)', function() {
+  it('should parse I want to :)', function() {
     var json = {
+      node: 'element',
       tag: 'div',
-      attr: {
-        id: '1',
-        class: ['foo']
-      },
+      attr: { id: '1', class: 'foo' },
       child: [
         {
+          node: 'element',
           tag: 'h2',
-          text: 'sample text with <code>inline tag</code>'
+          child: [
+            { node: 'text', text: 'sample text with ' },
+            { node: 'element', tag: 'code', child: [{ node: 'text', text: 'inline tag' }] }
+          ]
         },
         {
+          node: 'element',
           tag: 'pre',
-          attr: {
-            id: 'demo',
-            class: ['foo', 'bar']
-          }
+          attr: { id: 'demo', class: ['foo', 'bar'] },
+          child: [{ node: 'text', text: 'foo' }]
         },
         {
+          node: 'element',
           tag: 'pre',
-          attr: {
-            id: 'output',
-            class: ['goo']
-          }
+          attr: { id: 'output', class: 'goo' },
+          child: [{ node: 'text', text: 'goo' }]
         },
         {
+          node: 'element',
           tag: 'input',
-          attr: {
-            id: 'execute',
-            type: 'button',
-            value: 'execute'
-          }
+          attr: { id: 'execute', type: 'button', value: 'execute' }
         }
       ]
     };
     var html = ''
       + '<div id="1" class="foo">'
       + '<h2>sample text with <code>inline tag</code></h2>'
-      + '<pre id="demo" class="foo bar"></pre>'
-      + '<pre id="output" class="goo"></pre>'
+      + '<pre id="demo" class="foo bar">foo</pre>'
+      + '<pre id="output" class="goo">goo</pre>'
       + '<input id="execute" type="button" value="execute"/>'
       + '</div>';
 
