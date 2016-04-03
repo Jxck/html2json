@@ -1,6 +1,5 @@
 if (typeof window === 'undefined') {
   var assert = require('assert');
-  var parseHtml = require('../src/html2json').parseHtml;
   var html2json = require('../src/html2json').html2json;
 }
 
@@ -16,8 +15,6 @@ describe('html2json', function() {
     };
     var html = '<div></div>';
 
-    var parsedHtml = parseHtml(html);
-    assert.strictEqual(parsedHtml, html);
     var actual = html2json(html);
     var expected = json;
     assert.deepEqual(actual, expected);
@@ -36,8 +33,6 @@ describe('html2json', function() {
     };
     var html = '<div>this is div</div>';
 
-    var parsedHtml = parseHtml(html);
-    assert.strictEqual(parsedHtml, html);
     var actual = html2json(html);
     var expected = json;
     assert.deepEqual(actual, expected);
@@ -53,8 +48,6 @@ describe('html2json', function() {
     };
     var html = '<div id="foo"></div>';
 
-    var parsedHtml = parseHtml(html);
-    assert.strictEqual(parsedHtml, html);
     var actual = html2json(html);
     var expected = json;
     assert.deepEqual(actual, expected);
@@ -77,8 +70,6 @@ describe('html2json', function() {
     };
     var html = '<div id="foo" class="bar goo">this is div</div>';
 
-    var parsedHtml = parseHtml(html);
-    assert.strictEqual(parsedHtml, html);
     var actual = html2json(html);
     var expected = json;
     assert.deepEqual(actual, expected);
@@ -103,8 +94,6 @@ describe('html2json', function() {
     };
     var html = '<div><p>child</p></div>';
 
-    var parsedHtml = parseHtml(html);
-    assert.strictEqual(parsedHtml, html);
     var actual = html2json(html);
     var expected = json;
     assert.deepEqual(actual, expected);
@@ -129,8 +118,6 @@ describe('html2json', function() {
     };
     var html = '<div><p>child1</p><p>child2</p></div>';
 
-    var parsedHtml = parseHtml(html);
-    assert.strictEqual(parsedHtml, html);
     var actual = html2json(html);
     var expected = json;
     assert.deepEqual(actual, expected);
@@ -158,8 +145,6 @@ describe('html2json', function() {
     };
     var html = '<div><p><textarea>alert(1);</textarea></p></div>';
 
-    var parsedHtml = parseHtml(html);
-    assert.strictEqual(parsedHtml, html);
     var actual = html2json(html);
     var expected = json;
     assert.deepEqual(actual, expected);
@@ -194,8 +179,6 @@ describe('html2json', function() {
     };
     var html = '<div><p><textarea>alert(1);</textarea></p><p>child of div</p></div>';
 
-    var parsedHtml = parseHtml(html);
-    assert.strictEqual(parsedHtml, html);
     var actual = html2json(html);
     var expected = json;
     assert.deepEqual(actual, expected);
@@ -232,8 +215,6 @@ describe('html2json', function() {
       + '<img src="photo.jpg" alt="photo"/>'
       + '</div>';
 
-    var parsedHtml = parseHtml(html);
-    assert.strictEqual(parsedHtml, html);
     var actual = html2json(html);
     var expected = json;
     assert.deepEqual(actual, expected);
@@ -292,8 +273,6 @@ describe('html2json', function() {
       + '<p><strong>start</strong> with inline tag</p>'
       + '</div>';
 
-    var parsedHtml = parseHtml(html);
-    assert.strictEqual(parsedHtml, html);
     var actual = html2json(html);
     var expected = json;
     assert.deepEqual(actual, expected);
@@ -340,8 +319,6 @@ describe('html2json', function() {
       + '<input id="execute" type="button" value="execute"/>'
       + '</div>';
 
-    var parsedHtml = parseHtml(html);
-    assert.strictEqual(parsedHtml, html);
     var actual = html2json(html);
     var expected = json;
     assert.deepEqual(actual, expected);
