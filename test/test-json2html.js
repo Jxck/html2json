@@ -18,10 +18,7 @@ describe('json2html', function() {
   });
 
   it('should parse div with text', function() {
-    var json = {
-      tag: 'div',
-      text: 'this is div'
-    };
+    var json = { tag: 'div', text: 'this is div' };
     var html = '<div>this is div</div>';
 
     var actual = json2html(json);
@@ -42,7 +39,7 @@ describe('json2html', function() {
     var json = {
       tag: 'div',
       attr: { id: 'foo', class: ['bar', 'goo'] },
-      text: 'this is div'
+      text: 'this is div',
     };
     var html = '<div id="foo" class="bar goo">this is div</div>';
 
@@ -54,11 +51,11 @@ describe('json2html', function() {
   it('should parse div with child', function() {
     var json = {
       tag: 'div',
-      child: [{
-        tag: 'p'
-      }]
+      child: [
+        { tag: 'p', text: 'child' }
+      ]
     };
-    var html = '<div><p></p></div>';
+    var html = '<div><p>child</p></div>';
 
     var actual = json2html(json);
     var expected = html;
@@ -68,14 +65,12 @@ describe('json2html', function() {
   it('should parse div with 2 child', function() {
     var json = {
       tag: 'div',
-      child: [{
-        tag: 'p'
-      },
-      {
-        tag: 'p'
-      }]
+      child: [
+        { tag: 'p', text: 'child1' },
+        { tag: 'p', text: 'child2' },
+      ]
     };
-    var html = '<div><p></p><p></p></div>';
+    var html = '<div><p>child1</p><p>child2</p></div>';
 
     var actual = json2html(json);
     var expected = html;
@@ -85,14 +80,19 @@ describe('json2html', function() {
   it('should parse div with nested child', function() {
     var json = {
       tag: 'div',
-      child: [{
-        tag: 'p',
-        child: [{
-          tag: 'textarea'
-        }]
-      }]
+      child: [
+        {
+          tag: 'p',
+          child: [
+            {
+              tag: 'textarea',
+              text: 'alert(1);',
+            }
+          ]
+        }
+      ]
     };
-    var html = '<div><p><textarea></textarea></p></div>';
+    var html = '<div><p><textarea>alert(1);</textarea></p></div>';
 
     var actual = json2html(json);
     var expected = html;
@@ -102,16 +102,23 @@ describe('json2html', function() {
   it('should parse div with 2 nested child', function() {
     var json = {
       tag: 'div',
-      child: [{
-        tag: 'p',
-        child: [{
-          tag: 'textarea'
-        }]
-      },{
-        tag: 'p'
-      }]
+      child: [
+        {
+          tag: 'p',
+          child: [
+            {
+              tag: 'textarea',
+              text: 'alert(1);',
+            }
+          ]
+        },
+        {
+          tag: 'p',
+          text: 'child of div',
+        }
+      ]
     };
-    var html = '<div><p><textarea></textarea></p><p></p></div>';
+    var html = '<div><p><textarea>alert(1);</textarea></p><p>child of div</p></div>';
 
     var actual = json2html(json);
     var expected = html;
@@ -123,25 +130,29 @@ describe('json2html', function() {
       tag: 'div',
       attr: {
         id: '1',
-        class: ['foo', 'bar']
+        class: ['foo', 'bar'],
       },
-      child: [{
-        tag: 'h2',
-        text: 'sample text'
-      },{
-        tag: 'input',
-        attr: {
-          id: 'execute',
-          type: 'button',
-          value: 'execute'
+      child: [
+        {
+          tag: 'h2',
+          text: 'sample text',
+        },
+        {
+          tag: 'input',
+          attr: {
+            id: 'execute',
+            type: 'button',
+            value: 'execute',
+          }
+        },
+        {
+          tag: 'img',
+          attr: {
+            src: 'photo.jpg',
+            alt: 'photo',
+          }
         }
-      },{
-        tag: 'img',
-        attr: {
-          src: 'photo.jpg',
-          alt: 'photo'
-        }
-      }]
+      ]
     };
 
     var html = ''
@@ -161,15 +172,18 @@ describe('json2html', function() {
       tag: 'div',
       attr: {
         id: '1',
-        class: ['foo', 'bar']
+        class: ['foo', 'bar'],
       },
-      child: [{
-        tag: 'p',
-        text: 'sample text with tag <strong>like</strong> this'
-      },{
-        tag: 'p',
-        text: '<strong>start</strong> with inline tag'
-      }]
+      child: [
+        {
+          tag: 'p',
+          text: 'sample text with tag <strong>like</strong> this'
+        },
+        {
+          tag: 'p',
+          text: '<strong>start</strong> with inline tag'
+        }
+      ]
     };
 
     var html = ''
@@ -190,29 +204,34 @@ describe('json2html', function() {
         id: '1',
         class: ['foo']
       },
-      child: [{
-        tag: 'h2',
-        text: 'sample text with <code>inline tag</code>'
-      },{
-        tag: 'pre',
-        attr: {
-          id: 'demo',
-          class: ['foo', 'bar']
+      child: [
+        {
+          tag: 'h2',
+          text: 'sample text with <code>inline tag</code>'
+        },
+        {
+          tag: 'pre',
+          attr: {
+            id: 'demo',
+            class: ['foo', 'bar']
+          }
+        },
+        {
+          tag: 'pre',
+          attr: {
+            id: 'output',
+            class: ['goo']
+          }
+        },
+        {
+          tag: 'input',
+          attr: {
+            id: 'execute',
+            type: 'button',
+            value: 'execute'
+          }
         }
-      },{
-        tag: 'pre',
-        attr: {
-          id: 'output',
-          class: ['goo']
-        }
-      },{
-        tag: 'input',
-        attr: {
-          id: 'execute',
-          type: 'button',
-          value: 'execute'
-        }
-      }]
+      ]
     };
     var html = ''
       + '<div id="1" class="foo">'
