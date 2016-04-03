@@ -1,4 +1,6 @@
 (function(global) {
+  DEBUG = true;
+  var debug = DEBUG ? console.log.bind(console): function(){};
 
   if (typeof window === 'undefined') {
     require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
@@ -9,12 +11,13 @@
   }
 
   global.html2json = function html2json(html) {
-    html = html.replace(/<!DOCTYPE[\s\S]+?>/, '');
+    //html = html.replace(/<!DOCTYPE[\s\S]+?>/, '');
 
     var bufArray = [];
     var results = {};
     HTMLParser(html, {
       start: function(tag, attrs, unary) {
+        debug(tag, attrs, unary);
         // buffer for single tag
         var buf = {
           node: 'element',
@@ -63,6 +66,7 @@
         }
       },
       end: function(tag) {
+        debug(tag);
         // merge into parent tag
         var buf = bufArray.shift();
         if (buf.tag !== tag) console.error('invalid state: mismatch end tag');
@@ -77,6 +81,7 @@
         parent.child.push(buf);
       },
       chars: function(text) {
+        debug(text);
         var node = {
           node: 'text',
           text: text,
@@ -88,6 +93,7 @@
         parent.child.push(node);
       },
       comment: function(text) {
+        debug(text);
         var node = {
           node: 'comment',
           text: text,
