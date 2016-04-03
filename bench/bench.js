@@ -16,31 +16,36 @@ var json = {
   tag: 'div',
   attr: {
     id: '1',
-    class: ['foo']
+    class: ['foo'],
   },
-  child: [{
-    tag: 'h2',
-    text: 'sample text with <code>inline tag</code>'
-  },{
-    tag: 'pre',
-    attr: {
-      id: 'demo',
-      class: ['foo', 'bar']
+  child: [
+    {
+      tag: 'h2',
+      text: 'sample text with <code>inline tag</code>',
+    },
+    {
+      tag: 'pre',
+      attr: {
+        id: 'demo',
+        class: ['foo', 'bar'],
+      }
+    },
+    {
+      tag: 'pre',
+      attr: {
+        id: 'output',
+        class: ['goo'],
+      }
+    },
+    {
+      tag: 'input',
+      attr: {
+        id: 'execute',
+        type: 'button',
+        value: 'execute',
+      }
     }
-  },{
-    tag: 'pre',
-    attr: {
-      id: 'output',
-      class: ['goo']
-    }
-  },{
-    tag: 'input',
-    attr: {
-      id: 'execute',
-      type: 'button',
-      value: 'execute'
-    }
-  }]
+  ]
 };
 console.time('json2html');
 for (var i = 0; i < 1000; i++) {
