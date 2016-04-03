@@ -91,31 +91,31 @@ this.html2json = function html2json(html) {
         // if support it.
         // 'hoge <inline>tag</inline> fuga'
         var attributes = '';
-        for (var i = 0; i < attrs.length; i++) {
-          attributes += ' ' + attrs[i].name + '="' + attrs[i].value + '"';
-        }
+        attrs.forEach(function (attr) {
+          attributes += ' ' + attr.name + '="' + attr.value + '"';
+        });
         inlineBuf.push('<' + tag + attributes + '>');
       } else {
         var buf = {}; // buffer for single tag
         buf.tag = tag;
         if (attrs.length !== 0) {
-          var attr = {};
-          for (var i = 0; i < attrs.length; i++) {
-            var attr_name = attrs[i].name;
-            var attr_value = attrs[i].value;
+          var attributes = {};
+          attrs.forEach(function(attr) {
+            var attr_name = attr.name;
+            var attr_value = attr.value;
             if (attr_name === 'class') {
               attr_value = attr_value.split(' ');
             }
-            attr[attr_name] = attr_value;
-          }
-          buf['attr'] = attr;
+            attributes[attr_name] = attr_value;
+          });
+          buf['attr'] = attributes;
         }
         if (unary) {
           // if this tag don't has end tag
           // like <img src="hoge.png"/>
           // add last parents
           var last = bufArray.last();
-          if (!(last.child instanceof Array)) {
+          if (!(Array.isArray(last.child))) {
             last.child = [];
           }
           last.child.push(buf);
@@ -143,7 +143,7 @@ this.html2json = function html2json(html) {
           return results = buf;
         }
         var last = bufArray.last();
-        if (!(last.child instanceof Array)) {
+        if (!(Array.isArray(last.child))) {
           last.child = [];
         }
         last.child.push(buf);
@@ -202,9 +202,9 @@ this.json2html = function json2html(json) {
   buf.push('>');
   text ? buf.push(text) : null;
   if (children) {
-    for (var j = 0; j < children.length; j++) {
-      buf.push(json2html(children[j]));
-    }
+    children.forEach(function(child) {
+      buf.push(json2html(child));
+    });
   }
   if (!(empty.indexOf(tag) > -1)) buf.push('</' + tag + '>');
   return buf.join('');
