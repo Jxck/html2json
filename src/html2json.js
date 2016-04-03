@@ -13,9 +13,14 @@ global.parseHtml = function parseHtml(html) {
   HTMLParser(html, {
     start: function(tag, attrs, unary) {
       results += '<' + tag;
-      attrs.forEach(function(attr) {
-        results += ' ' + attr.name + '=' + q(attr.escaped);
-      });
+
+      var attributes = '';
+      if (attrs.length > 0) {
+        attributes = ' ' + attrs.map(function(attr) {
+          return attr.name + '=' + q(attr.escaped);
+        }).join(' ');
+      }
+      results += attributes;
       results += (unary ? '/' : '') + '>';
     },
     end: function(tag) {
