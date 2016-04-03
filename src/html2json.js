@@ -51,7 +51,9 @@
             var name  = attr.name;
             var value = attr.value;
 
-            if (name === 'class') {
+            if (value.match(/ /)) {
+              // has multi attibutes
+              // make it array of attribute
               value = value.split(' ');
             }
 
@@ -100,7 +102,7 @@
     return results;
   };
 
-  console.log(global.html2json(`<div><p>bar</p></div>`));
+  console.log(global.html2json('<div><p>bar</p></div>'));
 
 
   global.json2html = function json2html(json) {
