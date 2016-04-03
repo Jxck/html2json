@@ -7,9 +7,9 @@ this.parseHtml = function parseHtml(html) {
   HTMLParser(html, {
     start: function(tag, attrs, unary) {
       results += '<' + tag;
-      for (var i = 0; i < attrs.length; i++) {
-        results += ' ' + attrs[i].name + '="' + attrs[i].escaped + '"';
-      }
+      attrs.forEach(function(attr) {
+        results += ' ' + attr.name + '="' + attr.escaped + '"';
+      });
       results += (unary ? '/' : '') + '>';
     },
     end: function(tag) {
@@ -23,7 +23,7 @@ this.parseHtml = function parseHtml(html) {
     }
   });
   return results;
-}
+};
 
 this.html2json = function html2json(html) {
   // Inline Elements - HTML 4.01
@@ -171,7 +171,7 @@ this.html2json = function html2json(html) {
     }
   });
   return results;
-}
+};
 
 this.json2html = function json2html(json) {
   var html = '';
@@ -184,16 +184,16 @@ this.json2html = function json2html(json) {
   var empty = ['area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param', 'embed'];
 
   var buildAttr = function(attr) {
-    for (var k in attr) {
+    Object.keys(attr).forEach(function(k) {
       buf.push(' ' + k + '="');
-      if (attr[k] instanceof Array) {
+      if (Array.isArray(attr[k])) {
         buf.push(attr[k].join(' '));
       } else {
         buf.push(attr[k]);
       }
       buf.push('"');
-    }
-  }
+    });
+  };
 
   buf.push('<');
   buf.push(tag);
@@ -208,4 +208,4 @@ this.json2html = function json2html(json) {
   }
   if (!(empty.indexOf(tag) > -1)) buf.push('</' + tag + '>');
   return buf.join('');
-}
+};
