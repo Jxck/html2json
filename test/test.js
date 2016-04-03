@@ -20,6 +20,21 @@ describe('html2json', function() {
     assert.deepEqual(html, json2html(json));
   });
 
+  it('should parse multi div', function() {
+    var json = {
+      node: 'root',
+      child: [
+        { node: 'element', tag : 'div' },
+        { node: 'element', tag : 'div' },
+      ]
+    };
+    var html = '<div></div><div></div>';
+
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
+  });
+
+
   it('should parse div with text', function() {
     var json = {
       node: 'element',
