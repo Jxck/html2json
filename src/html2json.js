@@ -179,9 +179,10 @@ this.json2html = function json2html(json) {
   // Empty Elements - HTML 4.01
   var empty = ['area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param', 'embed'];
 
+  var child = '';
   if (json.child) {
-    json.child = json.child.map(function(child) {
-      return json2html(child);
+    child = json.child.map(function(c) {
+      return json2html(c);
     }).join('');
   }
 
@@ -204,7 +205,6 @@ this.json2html = function json2html(json) {
     var open = '<' + json.tag + attr + '>';
     var close = '</' + json.tag + '>';
     var text = json.text || '';
-    var child = json.child;
     return [open, text, child, close].join('');
   }
 };
