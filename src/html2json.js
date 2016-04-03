@@ -13,7 +13,6 @@
 
     var bufArray = [];
     var results = {};
-    var inlineBuf = [];
     HTMLParser(html, {
       start: function(tag, attrs, unary) {
         // buffer for single tag
@@ -66,6 +65,8 @@
       end: function(tag) {
         // merge into parent tag
         var buf = bufArray.shift();
+        if (buf.tag !== tag) console.error('invalid state: mismatch end tag');
+
         if (bufArray.length === 0) {
           return results = buf;
         }
@@ -79,7 +80,7 @@
         var node = {
           node: 'text',
           text: text,
-        }
+        };
         var parent = bufArray[0];
         if (parent.child === undefined) {
           parent.child = [];
@@ -114,16 +115,21 @@
       if (attr !== '') attr = ' ' + attr;
     }
 
-    var tag = json.tag;
-    if (empty.indexOf(tag) > -1) {
-      // empty element
-      return '<' + json.tag + attr + '/>';
-    } else {
-      // non empty element
-      var open = '<' + json.tag + attr + '>';
-      var close = '</' + json.tag + '>';
-      var text = json.text || '';
-      return [open, text, child, close].join('');
+    if (json.node === 'element') {
+      var tag = json.tag;
+      if (empty.indexOf(tag) > -1) {
+        // empty element
+        return '<' + json.tag + attr + '/>';
+      } else {
+        // non empty element
+        var open = '<' + json.tag + attr + '>';
+        var close = '</' + json.tag + '>';
+        return open + child + close;
+      }
+    }
+
+    if (json.node === 'text') {
+      return json.text;
     }
   };
 
