@@ -25,21 +25,55 @@ this.parseHtml = function parseHtml(html) {
   return results;
 }
 
-function makeMap(str) {
-  var obj = {}, items = str.split(',');
-  for (var i = 0; i < items.length; i++) {
-    obj[items[i]] = true;
-  }
-  return obj;
-}
-
 this.html2json = function html2json(html) {
   // Inline Elements - HTML 4.01
-  var inline = makeMap('a,abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,select,small,span,strike,strong,sub,sup,textarea,tt,u,var');
+  var inline = [
+    'a',
+    'abbr',
+    'acronym',
+    'applet',
+    'b',
+    'basefont',
+    'bdo',
+    'big',
+    'br',
+    'button',
+    'cite',
+    'code',
+    'del',
+    'dfn',
+    'em',
+    'font',
+    'i',
+    'iframe',
+    'img',
+    'input',
+    'ins',
+    'kbd',
+    'label',
+    'map',
+    'object',
+    'q',
+    's',
+    'samp',
+    'script',
+    'select',
+    'small',
+    'span',
+    'strike',
+    'strong',
+    'sub',
+    'sup',
+    'textarea',
+    'tt',
+    'u',
+    'var'
+  ];
+
   // but I want to handle some tag like block tag
-  inline.textarea = false;
-  inline.input = false;
-  inline.img = false;
+  inline.splice(inline.indexOf('textarea'), 1);
+  inline.splice(inline.indexOf('input'), 1);
+  inline.splice(inline.indexOf('img'), 1);
 
   html = html.replace(/<!DOCTYPE[\s\S]+?>/, '');
 
@@ -51,7 +85,7 @@ this.html2json = function html2json(html) {
   };
   HTMLParser(html, {
     start: function(tag, attrs, unary) {
-      if (inline[tag]) {
+      if (inline.indexOf(tag) > -1) {
         // inline tag is melted into text
         // because syntacs higlight became dirty
         // if support it.
@@ -91,7 +125,7 @@ this.html2json = function html2json(html) {
       }
     },
     end: function(tag) {
-      if (inline[tag]) {
+      if (inline.indexOf(tag) > 0) {
         // if end of inline tag
         // inlineBuf is now '<inline>tag'
         // melt into last node text
@@ -147,7 +181,7 @@ this.json2html = function json2html(json) {
   var buf = [];
 
   // Empty Elements - HTML 4.01
-  var empty = makeMap('area,base,basefont,br,col,frame,hr,img,input,isindex,link,meta,param,embed');
+  var empty = ['area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param', 'embed'];
 
   var buildAttr = function(attr) {
     for (var k in attr) {
@@ -164,7 +198,7 @@ this.json2html = function json2html(json) {
   buf.push('<');
   buf.push(tag);
   json.attr ? buf.push(buildAttr(json.attr)) : null;
-  if (empty[tag]) buf.push('/');
+  if (empty.indexOf(tag) > -1) buf.push('/');
   buf.push('>');
   text ? buf.push(text) : null;
   if (children) {
@@ -172,6 +206,6 @@ this.json2html = function json2html(json) {
       buf.push(json2html(children[j]));
     }
   }
-  if (!empty[tag]) buf.push('</' + tag + '>');
+  if (!(empty.indexOf(tag) > -1)) buf.push('</' + tag + '>');
   return buf.join('');
 }
