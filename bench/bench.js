@@ -1,7 +1,17 @@
-if (!console || !console.time) {
-  console.time = function() {};
-  console.timeEnd = function() {};
+if (typeof window === 'undefined') {
+  json2html = require('../index').json2html;
+  html2json = require('../index').html2json;
 }
+
+if (typeof console.time === 'undefined') {
+  console.time = function(tag) {
+    this[tag] = Date.now();
+  };
+  console.timeEnd = function(tag) {
+    console.log(tag, Date.now() - this[tag], 'ms');
+  };
+}
+
 var json = {
   tag: 'div',
   attr: {
@@ -33,11 +43,9 @@ var json = {
   }]
 };
 console.time('json2html');
-var json2html_start = (new Date()).getTime();
 for (var i = 0; i < 1000; i++) {
   json2html(json);
 }
-var json2html_end = (new Date()).getTime();
 console.timeEnd('json2html');
 
 var html = ''
@@ -49,14 +57,7 @@ var html = ''
   + '</div>';
 
 console.time('html2json');
-var html2json_start = (new Date()).getTime();
 for (var j = 0; j < 1000; j++) {
   html2json(html);
 }
-var html2json_end = (new Date()).getTime();
 console.timeEnd('html2json');
-
-$(function() {
-  $('#json2html').text(json2html_end - json2html_start);
-  $('#html2json').text(html2json_end - html2json_start);
-});

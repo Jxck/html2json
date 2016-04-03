@@ -1,4 +1,4 @@
-if (typeof HTMLParser === 'undefined') {
+if (typeof window === 'undefined') {
   require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
 }
 
