@@ -102,12 +102,7 @@
       },
       chars: function(text) {
         var parent = bufArray[0];
-        if (parent) {
-          if (!parent.text) {
-            parent.text = '';
-          }
-          parent.text += text;
-        }
+        parent.text += text;
       },
       comment: function(text) {
         // results += "<!--" + text + "-->";
