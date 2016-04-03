@@ -4,14 +4,27 @@
 
 [htmlparser.js](https://github.com/blowsie/Pure-JavaScript-HTML5-Parser)
 
+
 ## How to use
+
+### browser
 
 include htmlparser.js & html2json.js scripts:
 
 ```html
-<script src="http://ejohn.org/files/htmlparser.js"></script>
-<script src="lib/html2json.js"></script>
+<script src="https://cdn.rawgit.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js"></script>
+<script src="src/html2json.js"></script>
 ```
+
+### node
+
+```javascript
+require('html2json').html2json;
+require('html2json').json2html;
+```
+
+
+### result
 
 json:
 
@@ -58,8 +71,6 @@ html:
   <input id="execute" type="button" value="execute"/>
 </div>
 ```
-
-result:
 
 ```javascript
 json === html2json(html);
