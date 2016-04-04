@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>html2json example</title>
+<div id="mocha"></div>
+
+<h1>see the source and console</h1>
+
+<script src="../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js"></script>
+<script src="../src/html2json.js"></script>
+
+<script>
+var html = document.body.innerHTML.trim();
+console.log(html);
+var json = html2json(html);
+console.log(JSON.stringify(json, ' ', ' '));
+console.assert(html === json2html(json));
+</script>
