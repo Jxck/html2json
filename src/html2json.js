@@ -14,7 +14,7 @@
     return html
       .replace(/<\?xml.*\?>\n/, '')
       .replace(/<!doctype.*\>\n/, '')
-      .replace(/<!DOCTYPE.*\>\n/, '')
+      .replace(/<!DOCTYPE.*\>\n/, '');
   }
 
   global.html2json = function html2json(html) {
