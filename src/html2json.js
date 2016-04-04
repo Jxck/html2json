@@ -1,6 +1,6 @@
 (function(global) {
   DEBUG = false;
-  var debug = DEBUG ? console.log.bind(console): function(){};
+  var debug = DEBUG ? console.log.bind(console) : function(){};
 
   if (typeof window === 'undefined') {
     require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
@@ -26,7 +26,7 @@
         };
         if (attrs.length !== 0) {
           node.attr = attrs.reduce(function(pre, attr) {
-            var name  = attr.name;
+            var name = attr.name;
             var value = attr.value;
 
             // has multi attibutes
@@ -74,13 +74,13 @@
 
         if (bufArray.length === 0) {
           results.child.push(node);
-          return results;
+        } else {
+          var parent = bufArray[0];
+          if (parent.child === undefined) {
+            parent.child = [];
+          }
+          parent.child.push(node);
         }
-        var parent = bufArray[0];
-        if (parent.child === undefined) {
-          parent.child = [];
-        }
-        parent.child.push(node);
       },
       chars: function(text) {
         debug(text);
@@ -90,13 +90,13 @@
         };
         if (bufArray.length === 0) {
           results.child.push(node);
-          return results;
+        } else {
+          var parent = bufArray[0];
+          if (parent.child === undefined) {
+            parent.child = [];
+          }
+          parent.child.push(node);
         }
-        var parent = bufArray[0];
-        if (parent.child === undefined) {
-          parent.child = [];
-        }
-        parent.child.push(node);
       },
       comment: function(text) {
         debug(text);
@@ -109,7 +109,7 @@
           parent.child = [];
         }
         parent.child.push(node);
-      }
+      },
     });
     return results;
   };
@@ -140,12 +140,12 @@
       if (empty.indexOf(tag) > -1) {
         // empty element
         return '<' + json.tag + attr + '/>';
-      } else {
-        // non empty element
-        var open = '<' + json.tag + attr + '>';
-        var close = '</' + json.tag + '>';
-        return open + child + close;
       }
+
+      // non empty element
+      var open = '<' + json.tag + attr + '>';
+      var close = '</' + json.tag + '>';
+      return open + child + close;
     }
 
     if (json.node === 'text') {
@@ -160,5 +160,4 @@
       return child;
     }
   };
-
 })(this);
