@@ -1,5 +1,5 @@
 (function(global) {
-  DEBUG = true;
+  DEBUG = false;
   var debug = DEBUG ? console.log.bind(console): function(){};
 
   if (typeof window === 'undefined') {
@@ -12,17 +12,20 @@
 
   global.html2json = function html2json(html) {
     var bufArray = [];
-    var results = {};
+    var results = {
+      node: 'root',
+      child: [],
+    };
     HTMLParser(html, {
       start: function(tag, attrs, unary) {
         debug(tag, attrs, unary);
-        // buffer for single tag
-        var buf = {
+        // node for this element
+        var node = {
           node: 'element',
           tag: tag,
         };
         if (attrs.length !== 0) {
-          buf.attr = attrs.reduce(function(pre, attr) {
+          node.attr = attrs.reduce(function(pre, attr) {
             var name  = attr.name;
             var value = attr.value;
 
@@ -58,25 +61,26 @@
           if (parent.child === undefined) {
             parent.child = [];
           }
-          parent.child.push(buf);
+          parent.child.push(node);
         } else {
-          bufArray.unshift(buf);
+          bufArray.unshift(node);
         }
       },
       end: function(tag) {
         debug(tag);
         // merge into parent tag
-        var buf = bufArray.shift();
-        if (buf.tag !== tag) console.error('invalid state: mismatch end tag');
+        var node = bufArray.shift();
+        if (node.tag !== tag) console.error('invalid state: mismatch end tag');
 
         if (bufArray.length === 0) {
-          return results = buf;
+          results.child.push(node);
+          return results;
         }
         var parent = bufArray[0];
         if (parent.child === undefined) {
           parent.child = [];
         }
-        parent.child.push(buf);
+        parent.child.push(node);
       },
       chars: function(text) {
         debug(text);
@@ -84,6 +88,10 @@
           node: 'text',
           text: text,
         };
+        if (bufArray.length === 0) {
+          results.child.push(node);
+          return results;
+        }
         var parent = bufArray[0];
         if (parent.child === undefined) {
           parent.child = [];
@@ -146,6 +154,10 @@
 
     if (json.node === 'comment') {
       return '<!--' + json.text + '-->';
+    }
+
+    if (json.node === 'root') {
+      return child;
     }
   };
 

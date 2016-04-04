@@ -11,8 +11,10 @@ describe('html2json', function() {
 
   it('should parse div', function() {
     var json = {
-      node: 'element',
-      tag : 'div',
+      node: 'root',
+      child: [
+        { node: 'element', tag : 'div' }
+      ]
     };
     var html = '<div></div>';
 
@@ -37,12 +39,17 @@ describe('html2json', function() {
 
   it('should parse div with text', function() {
     var json = {
-      node: 'element',
-      tag: 'div',
+      node: 'root',
       child: [
         {
-          node: 'text',
-          text: 'this is div'
+          node: 'element',
+          tag: 'div',
+          child: [
+            {
+              node: 'text',
+              text: 'this is div'
+            }
+          ]
         }
       ]
     };
@@ -54,10 +61,15 @@ describe('html2json', function() {
 
   it('should parse div with comment', function() {
     var json = {
-      node: 'element',
-      tag : 'div',
+      node: 'root',
       child: [
-        { node: 'comment', text: ' foo ' }
+        {
+          node: 'element',
+          tag : 'div',
+          child: [
+            { node: 'comment', text: ' foo ' }
+          ]
+        }
       ]
     };
     var html = '<div><!-- foo --></div>';
@@ -68,11 +80,16 @@ describe('html2json', function() {
 
   it('should parse div with id', function() {
     var json = {
-      node: 'element',
-      tag: 'div',
-      attr: {
-        id: 'foo'
-      }
+      node: 'root',
+      child: [
+        {
+          node: 'element',
+          tag: 'div',
+          attr: {
+            id: 'foo'
+          }
+        }
+      ]
     };
     var html = '<div id="foo"></div>';
 
@@ -82,16 +99,21 @@ describe('html2json', function() {
 
   it('should parse div with id and class', function() {
     var json = {
-      node: 'element',
-      tag: 'div',
-      attr: {
-        id: 'foo',
-        class: ['bar', 'goo']
-      },
+      node: 'root',
       child: [
         {
-          node: 'text',
-          text: 'this is div',
+          node: 'element',
+          tag: 'div',
+          attr: {
+            id: 'foo',
+            class: ['bar', 'goo']
+          },
+          child: [
+            {
+              node: 'text',
+              text: 'this is div',
+            }
+          ]
         }
       ]
     };
@@ -103,16 +125,21 @@ describe('html2json', function() {
 
   it('should parse div with child', function() {
     var json = {
-      node: 'element',
-      tag: 'div',
+      node: 'root',
       child: [
         {
           node: 'element',
-          tag: 'p',
+          tag: 'div',
           child: [
             {
-              node: 'text',
-              text: 'child'
+              node: 'element',
+              tag: 'p',
+              child: [
+                {
+                  node: 'text',
+                  text: 'child'
+                }
+              ]
             }
           ]
         }
@@ -126,18 +153,23 @@ describe('html2json', function() {
 
   it('should parse div with 2 child', function() {
     var json = {
-      node: 'element',
-      tag: 'div',
+      node: 'root',
       child: [
         {
           node: 'element',
-          tag: 'p',
-          child: [{ node: 'text', text: 'child1' }]
-        },
-        {
-          node: 'element',
-          tag: 'p',
-          child: [{ node: 'text', text: 'child2' }]
+          tag: 'div',
+          child: [
+            {
+              node: 'element',
+              tag: 'p',
+              child: [{ node: 'text', text: 'child1' }]
+            },
+            {
+              node: 'element',
+              tag: 'p',
+              child: [{ node: 'text', text: 'child2' }]
+            }
+          ]
         }
       ]
     };
@@ -149,18 +181,23 @@ describe('html2json', function() {
 
   it('should parse div with nested child', function() {
     var json = {
-      node: 'element',
-      tag: 'div',
+      node: 'root',
       child: [
         {
           node: 'element',
-          tag: 'p',
+          tag: 'div',
           child: [
             {
               node: 'element',
-              tag: 'textarea',
+              tag: 'p',
               child: [
-                { node: 'text', text: 'alert(1);' }
+                {
+                  node: 'element',
+                  tag: 'textarea',
+                  child: [
+                    { node: 'text', text: 'alert(1);' }
+                  ]
+                }
               ]
             }
           ]
@@ -175,27 +212,32 @@ describe('html2json', function() {
 
   it('should parse div with 2 nested child', function() {
     var json = {
-      node: 'element',
-      tag: 'div',
+      node: 'root',
       child: [
         {
           node: 'element',
-          tag: 'p',
+          tag: 'div',
           child: [
             {
               node: 'element',
-              tag: 'textarea',
+              tag: 'p',
               child: [
-                { node: 'text', text: 'alert(1);' }
+                {
+                  node: 'element',
+                  tag: 'textarea',
+                  child: [
+                    { node: 'text', text: 'alert(1);' }
+                  ]
+                }
+              ]
+            },
+            {
+              node: 'element',
+              tag: 'p',
+              child: [
+                { node: 'text', text: 'child of div' }
               ]
             }
-          ]
-        },
-        {
-          node: 'element',
-          tag: 'p',
-          child: [
-            { node: 'text', text: 'child of div' }
           ]
         }
       ]
@@ -208,24 +250,29 @@ describe('html2json', function() {
 
   it('should parse div with unary & ingored inline tag', function() {
     var json = {
-      node: 'element',
-      tag: 'div',
-      attr: { id: '1', class: ['foo', 'bar'] },
+      node: 'root',
       child: [
         {
           node: 'element',
-          tag: 'h2',
-          child: [ { node: 'text', text: 'sample text' } ]
-        },
-        {
-          node: 'element',
-          tag: 'input',
-          attr: { id: 'execute', type: 'button', value: 'execute' }
-        },
-        {
-          node: 'element',
-          tag: 'img',
-          attr: { src: 'photo.jpg', alt: 'photo' }
+          tag: 'div',
+          attr: { id: '1', class: ['foo', 'bar'] },
+          child: [
+            {
+              node: 'element',
+              tag: 'h2',
+              child: [ { node: 'text', text: 'sample text' } ]
+            },
+            {
+              node: 'element',
+              tag: 'input',
+              attr: { id: 'execute', type: 'button', value: 'execute' }
+            },
+            {
+              node: 'element',
+              tag: 'img',
+              attr: { src: 'photo.jpg', alt: 'photo' }
+            }
+          ]
         }
       ]
     };
@@ -243,46 +290,51 @@ describe('html2json', function() {
 
   it('should parse div with inline tag', function() {
     var json = {
-      node: 'element',
-      tag: 'div',
-      attr: { id: '1', class: ['foo', 'bar'] },
+      node: 'root',
       child: [
         {
           node: 'element',
-          tag: 'p',
-          child: [
-            {
-              node: 'text',
-              text: 'text with ',
-            },
-            {
-              node: 'element',
-              tag: 'strong',
-              child: [
-                { node: 'text', text: 'strong' }
-              ]
-            },
-            {
-              node: 'text',
-              text: ' tag'
-            },
-          ]
-        },
-        {
-          node: 'element',
-          tag: 'p',
+          tag: 'div',
+          attr: { id: '1', class: ['foo', 'bar'] },
           child: [
             {
               node: 'element',
-              tag: 'strong',
+              tag: 'p',
               child: [
-                { node: 'text', text: 'start' }
+                {
+                  node: 'text',
+                  text: 'text with ',
+                },
+                {
+                  node: 'element',
+                  tag: 'strong',
+                  child: [
+                    { node: 'text', text: 'strong' }
+                  ]
+                },
+                {
+                  node: 'text',
+                  text: ' tag'
+                },
               ]
             },
             {
-              node: 'text',
-              text: ' with inline tag',
-            },
+              node: 'element',
+              tag: 'p',
+              child: [
+                {
+                  node: 'element',
+                  tag: 'strong',
+                  child: [
+                    { node: 'text', text: 'start' }
+                  ]
+                },
+                {
+                  node: 'text',
+                  text: ' with inline tag',
+                },
+              ]
+            }
           ]
         }
       ]
@@ -300,34 +352,39 @@ describe('html2json', function() {
 
   it('should parse I want to :)', function() {
     var json = {
-      node: 'element',
-      tag: 'div',
-      attr: { id: '1', class: 'foo' },
+      node: 'root',
       child: [
         {
           node: 'element',
-          tag: 'h2',
+          tag: 'div',
+          attr: { id: '1', class: 'foo' },
           child: [
-            { node: 'text', text: 'sample text with ' },
-            { node: 'element', tag: 'code', child: [{ node: 'text', text: 'inline tag' }] }
+            {
+              node: 'element',
+              tag: 'h2',
+              child: [
+                { node: 'text', text: 'sample text with ' },
+                { node: 'element', tag: 'code', child: [{ node: 'text', text: 'inline tag' }] }
+              ]
+            },
+            {
+              node: 'element',
+              tag: 'pre',
+              attr: { id: 'demo', class: ['foo', 'bar'] },
+              child: [{ node: 'text', text: 'foo' }]
+            },
+            {
+              node: 'element',
+              tag: 'pre',
+              attr: { id: 'output', class: 'goo' },
+              child: [{ node: 'text', text: 'goo' }]
+            },
+            {
+              node: 'element',
+              tag: 'input',
+              attr: { id: 'execute', type: 'button', value: 'execute' }
+            }
           ]
-        },
-        {
-          node: 'element',
-          tag: 'pre',
-          attr: { id: 'demo', class: ['foo', 'bar'] },
-          child: [{ node: 'text', text: 'foo' }]
-        },
-        {
-          node: 'element',
-          tag: 'pre',
-          attr: { id: 'output', class: 'goo' },
-          child: [{ node: 'text', text: 'goo' }]
-        },
-        {
-          node: 'element',
-          tag: 'input',
-          attr: { id: 'execute', type: 'button', value: 'execute' }
         }
       ]
     };
