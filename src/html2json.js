@@ -1,5 +1,6 @@
 (function(global) {
   DEBUG = false;
+  CAMEL_CASE_STYLE_KEYS = true;
   var debug = DEBUG ? console.log.bind(console) : function(){};
 
   if (typeof window === 'undefined') {
@@ -39,7 +40,27 @@
 
             // has multi attibutes
             // make it array of attribute
-            if (value.match(/ /)) {
+			if(name === 'style'){
+				var keyPattern = /[-\w]+:[\s]*/g;
+				var valuePattern = /:[\s]*[\w\d\s'"%.,()]*;/g;
+				
+				var keyMatches = value.match(keyPattern);
+				var valueMatches = value.match(valuePattern);
+				if(!(keyMatches === null || valueMatches === null || keyMatches.length !== valueMatches.length)){
+					value = {};
+					for(var i = 0; i < keyMatches.length; i++){
+						var key = keyMatches[i].trim().replace(':', '');
+						if(CAMEL_CASE_STYLE_KEYS){
+							key = key.replace(/-moz-/g, 'Moz-')
+								.replace(/-ms-/g, 'ms-')
+								.replace(/-o-/g, 'O-')
+								.replace(/-webkit-/g, 'Webkit-')
+								.replace(/-\w/g, function fn(x){return x.replace('-', '').toUpperCase()})
+						}
+						value[key] = valueMatches[i].replace(/[:;'"]*/g, '').trim();
+					}
+				}				
+			}else if (value.match(/ /)) {
               value = value.split(' ');
             }
 
