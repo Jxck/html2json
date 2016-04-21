@@ -119,6 +119,9 @@ repositry includes this at `lib/` as git subtree.
 
 ## CHANGELOG
 
+- 1.0.1
+ - fix [#14](https://github.com/Jxck/html2json/issues/14)
+
 before 1.0.0
 
 - Basically inline tag is melted into text
