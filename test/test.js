@@ -22,6 +22,20 @@ describe('html2json', function() {
     assert.deepEqual(html, json2html(json));
   });
 
+  it('should parse hr', function() {
+    var json = {
+      node: 'root',
+      child: [
+        { node: 'element', tag : 'hr' }
+      ]
+    };
+    var html = '<hr/>';
+
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
+  });
+
+
   it('should parse multi div', function() {
     var json = {
       node: 'root',
@@ -385,6 +399,10 @@ describe('html2json', function() {
               attr: { id: 'execute', type: 'button', value: 'execute' }
             }
           ]
+        },
+        {
+          node: 'element',
+          tag: 'hr',
         }
       ]
     };
@@ -394,7 +412,8 @@ describe('html2json', function() {
       + '<pre id="demo" class="foo bar">foo</pre>'
       + '<pre id="output" class="goo">goo</pre>'
       + '<input id="execute" type="button" value="execute"/>'
-      + '</div>';
+      + '</div>'
+      + '<hr/>';
 
     assert.deepEqual(json, html2json(html));
     assert.deepEqual(html, json2html(json));
