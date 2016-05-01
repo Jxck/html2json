@@ -2,7 +2,7 @@
   DEBUG = false;
   var debug = DEBUG ? console.log.bind(console) : function(){};
 
-  if (typeof window === 'undefined') {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
     require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
   }
 
