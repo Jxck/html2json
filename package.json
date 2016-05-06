@@ -1,6 +1,6 @@
 {
   "name": "html2json",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "html to json & json to html",
   "main": "index.js",
   "directories": {
