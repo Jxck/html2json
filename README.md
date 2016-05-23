@@ -38,7 +38,7 @@ console.assert(json === html);
 
 every json has `node`
 
-memeber of `node` is
+members of `node` are
 
 - `root`
 - `element`
