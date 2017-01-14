@@ -1,5 +1,5 @@
 (function(global) {
-  DEBUG = false;
+  const DEBUG = false;
   var debug = DEBUG ? console.log.bind(console) : function(){};
 
   if (typeof module === 'object' && typeof module.exports === 'object') {
