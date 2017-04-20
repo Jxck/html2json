@@ -5,6 +5,10 @@
   if (typeof module === 'object' && typeof module.exports === 'object') {
     require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
   }
+  
+  if (typeof module === "object" && typeof module.exports === "object") {
+  require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
+  }
 
   function q(v) {
     return '"' + v + '"';
