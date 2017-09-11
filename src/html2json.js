@@ -112,7 +112,7 @@
           node: 'comment',
           text: text,
         };
-        var parent = bufArray[0];
+        var parent = bufArray[0] || results;
         if (parent.child === undefined) {
           parent.child = [];
         }
