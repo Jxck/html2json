@@ -91,6 +91,22 @@ describe('html2json', function() {
     assert.deepEqual(json, html2json(html));
     assert.deepEqual(html, json2html(json));
   });
+  
+  it('should parse top-level comment', function() {
+    var json = {
+      node: 'root',
+      child: [
+        {
+          node: 'comment',
+          text: ' foo '
+        }
+      ]
+    };
+    var html = '<!-- foo -->';
+
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json));
+  });
 
   it('should parse div with id', function() {
     var json = {
