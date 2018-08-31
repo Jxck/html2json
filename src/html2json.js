@@ -10,6 +10,12 @@
     return '"' + v + '"';
   }
 
+  function camelCase( str ) {
+    return str.replace( /-([a-z])/g, function( all, i ){
+        return i.toUpperCase();
+    } )
+  }
+
   function removeDOCTYPE(html) {
     return html
       .replace(/<\?xml.*\?>\n/, '')
@@ -39,9 +45,20 @@
 
             // has multi attibutes
             // make it array of attribute
-            if (value.match(/ /)) {
+            if (name === 'style') {
+              var arr = value.split(';');
+              if (!arr.length) return;
+              value = {};
+              arr.map(item => {
+                var attr = item.split(':');
+                if (attr && attr.length > 1) {
+                  var camelCaseAttr = camelCase(attr[0]).trim();
+                  value[camelCaseAttr] = attr[1].trim();
+                }
+              })
+            } else if (value.match(/ /)) {
               value = value.split(' ');
-            }
+            } 
 
             // if attr already exists
             // merge it
