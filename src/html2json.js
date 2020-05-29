@@ -113,10 +113,10 @@
           text: text,
         };
         var parent = bufArray[0];
-        if (parent.child === undefined) {
+        if (parent && parent.child === undefined) {
           parent.child = [];
         }
-        parent.child.push(node);
+        if(parent)parent.child.push(node);
       },
     });
     return results;
