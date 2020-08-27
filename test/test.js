@@ -35,6 +35,21 @@ describe('html2json', function() {
     assert.deepEqual(html, json2html(json));
   });
 
+  it('should parse custom empty elements', function() {
+    var json = {
+      node: 'root',
+      child: [
+        { node: 'element', tag : 'customtag' }
+      ]
+    };
+    var html = '<customtag/>';
+    var options = {
+      empty: ['customtag']
+    };
+
+    assert.deepEqual(json, html2json(html));
+    assert.deepEqual(html, json2html(json, options));
+  });
 
   it('should parse multi div', function() {
     var json = {

@@ -122,14 +122,17 @@
     return results;
   };
 
-  global.json2html = function json2html(json) {
+  global.json2html = function json2html(json, options) {
     // Empty Elements - HTML 4.01
     var empty = ['area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param', 'embed'];
+    if(options && options.empty && Array.isArray(options.empty)) {
+      empty = empty.concat(options.empty);
+    }
 
     var child = '';
     if (json.child) {
       child = json.child.map(function(c) {
-        return json2html(c);
+        return json2html(c, options);
       }).join('');
     }
 
