@@ -117,7 +117,7 @@ json:
 repositry includes this at `lib/` as git subtree.
 
 
-## CHANGELOG
+## CHANGE LOG
 
 - 1.0.2
  - fix [#16](https://github.com/Jxck/html2json/issues/16) with merge [#17](https://github.com/Jxck/html2json/issues/17)
