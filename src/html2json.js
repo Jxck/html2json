@@ -1,9 +1,9 @@
-(function(global) {
+(function (global) {
   const DEBUG = false;
-  var debug = DEBUG ? console.log.bind(console) : function(){};
+  var debug = DEBUG ? console.log.bind(console) : function () {};
 
-  if (typeof module === 'object' && typeof module.exports === 'object') {
-    require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
+  if (typeof module === "object" && typeof module.exports === "object") {
+    require("../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js");
   }
 
   function q(v) {
@@ -12,35 +12,35 @@
 
   function removeDOCTYPE(html) {
     return html
-      .replace(/<\?xml.*\?>\n/, '')
-      .replace(/<!doctype.*\>\n/, '')
-      .replace(/<!DOCTYPE.*\>\n/, '');
+      .replace(/<\?xml.*\?>\n/, "")
+      .replace(/<!doctype.*\>\n/, "")
+      .replace(/<!DOCTYPE.*\>\n/, "");
   }
 
   global.html2json = function html2json(html) {
     html = removeDOCTYPE(html);
     var bufArray = [];
     var results = {
-      node: 'root',
+      node: "root",
       child: [],
     };
     HTMLParser(html, {
-      start: function(tag, attrs, unary) {
+      start: function (tag, attrs, unary) {
         debug(tag, attrs, unary);
         // node for this element
         var node = {
-          node: 'element',
+          node: "element",
           tag: tag,
         };
         if (attrs.length !== 0) {
-          node.attr = attrs.reduce(function(pre, attr) {
+          node.attr = attrs.reduce(function (pre, attr) {
             var name = attr.name;
             var value = attr.value;
 
             // has multi attibutes
             // make it array of attribute
             if (value.match(/ /)) {
-              value = value.split(' ');
+              value = value.split(" ");
             }
 
             // if attr already exists
@@ -74,11 +74,11 @@
           bufArray.unshift(node);
         }
       },
-      end: function(tag) {
+      end: function (tag) {
         debug(tag);
         // merge into parent tag
         var node = bufArray.shift();
-        if (node.tag !== tag) console.error('invalid state: mismatch end tag');
+        if (node.tag !== tag) console.error("invalid state: mismatch end tag");
 
         if (bufArray.length === 0) {
           results.child.push(node);
@@ -90,10 +90,10 @@
           parent.child.push(node);
         }
       },
-      chars: function(text) {
+      chars: function (text) {
         debug(text);
         var node = {
-          node: 'text',
+          node: "text",
           text: text,
         };
         if (bufArray.length === 0) {
@@ -106,10 +106,10 @@
           parent.child.push(node);
         }
       },
-      comment: function(text) {
+      comment: function (text) {
         debug(text);
         var node = {
-          node: 'comment',
+          node: "comment",
           text: text,
         };
         var parent = bufArray[0] || {};
@@ -124,47 +124,66 @@
 
   global.json2html = function json2html(json) {
     // Empty Elements - HTML 4.01
-    var empty = ['area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param', 'embed'];
+    var empty = [
+      "area",
+      "base",
+      "basefont",
+      "br",
+      "col",
+      "frame",
+      "hr",
+      "img",
+      "input",
+      "isindex",
+      "link",
+      "meta",
+      "param",
+      "embed",
+    ];
 
-    var child = '';
+    var child = "";
     if (json.child) {
-      child = json.child.map(function(c) {
-        return json2html(c);
-      }).join('');
+      child = json.child
+        .map(function (c) {
+          return json2html(c);
+        })
+        .join("");
     }
 
-    var attr = '';
+    var attr = "";
     if (json.attr) {
-      attr = Object.keys(json.attr).map(function(key) {
-        var value = json.attr[key];
-        if (Array.isArray(value)) value = value.join(' ');
-        return key + '=' + q(value);
-      }).join(' ');
-      if (attr !== '') attr = ' ' + attr;
+      attr = Object.keys(json.attr)
+        .map(function (key) {
+          var value = json.attr[key];
+          if (Array.isArray(value)) value = value.join(" ");
+          return key + "=" + q(value);
+        })
+        .join(" ");
+      if (attr !== "") attr = " " + attr;
     }
 
-    if (json.node === 'element') {
+    if (json.node === "element") {
       var tag = json.tag;
       if (empty.indexOf(tag) > -1) {
         // empty element
-        return '<' + json.tag + attr + '/>';
+        return "<" + json.tag + attr + "/>";
       }
 
       // non empty element
-      var open = '<' + json.tag + attr + '>';
-      var close = '</' + json.tag + '>';
+      var open = "<" + json.tag + attr + ">";
+      var close = "</" + json.tag + ">";
       return open + child + close;
     }
 
-    if (json.node === 'text') {
+    if (json.node === "text") {
       return json.text;
     }
 
-    if (json.node === 'comment') {
-      return '<!--' + json.text + '-->';
+    if (json.node === "comment") {
+      return "<!--" + json.text + "-->";
     }
 
-    if (json.node === 'root') {
+    if (json.node === "root") {
       return child;
     }
   };
