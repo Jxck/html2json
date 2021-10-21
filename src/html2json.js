@@ -83,7 +83,7 @@
         if (bufArray.length === 0) {
           results.child.push(node);
         } else {
-          var parent = bufArray[0];
+          var parent = bufArray[0] || {};
           if (parent.child === undefined) {
             parent.child = [];
           }
@@ -99,7 +99,7 @@
         if (bufArray.length === 0) {
           results.child.push(node);
         } else {
-          var parent = bufArray[0];
+          var parent = bufArray[0] || {};
           if (parent.child === undefined) {
             parent.child = [];
           }
@@ -112,7 +112,7 @@
           node: 'comment',
           text: text,
         };
-        var parent = bufArray[0];
+        var parent = bufArray[0] || {};
         if (parent.child === undefined) {
           parent.child = [];
         }
