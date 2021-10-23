@@ -32,6 +32,7 @@
           node: 'element',
           tag: tag,
         };
+				
         if (attrs.length !== 0) {
           node.attr = attrs.reduce(function(pre, attr) {
             var name = attr.name;
